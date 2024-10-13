@@ -20,12 +20,14 @@ def decrypt_file(file_path, input_key):
     try:
         # Read the Salt, IV & Encrypted Data from the file to be decrypted
         with open(file_path, "rb") as file:  # noqa
+            # noinspection PyUnusedLocal
+            # Read the salt to be able to read the iv and encrypted data, don't usage it
             salt = file.read(16)
             iv = file.read(16)
             encryptedData = file.read()
 
         # Create a Cipher object using the AES algorithm and the key
-        cipher = AES.new(key,AES.MODE_CBC, iv)
+        cipher = AES.new(input_key,AES.MODE_CBC, iv)
 
         # Decrypt the data and Remove the padding
         decryptedData = unpad(cipher.decrypt(encryptedData), AES.block_size)

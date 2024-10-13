@@ -13,6 +13,7 @@ from Crypto.Random import get_random_bytes
 # Simple Password text
 password = "hello"
 
+
 # Generate random salt
 salt = get_random_bytes(16)
 

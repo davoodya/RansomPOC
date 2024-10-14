@@ -29,7 +29,6 @@ LOGO_PATH = resource_path("img/logo.png")
 THANKS_PATH = resource_path("img/thank_you.png")
 
 
-
 #Step 3: Create Main Class of Decryptor App
 class DecryptorApp(tk.Tk):
     def __init__(self):
@@ -88,7 +87,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         ransomNoteLabel.tag_configure("center_red",justify='center', foreground='red')
         ransomNoteLabel.tag_configure("center_green",justify='center', foreground='green')
         ransomNoteLabel.tag_configure("center_white",justify='center', foreground='white')
-        ransomNoteLabel.tag_configure("center_yellow",justify='center', foreground='yellow')
+        ransomNoteLabel.tag_configure("center_yellow",justify='center', foreground='gold')
 
         # Apply tags for specif lines
         ransomNoteLabel.tag_add("center", "1.0","1.end")
@@ -103,7 +102,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.setup_log_frame()
         self.setup_progress_frame()
 
-
     def setup_key_frame(self):
         """ this function Setting UP the Frame for the Decryption Key Input """
         keyFrame = tk.Frame(self, bg='black')
@@ -117,7 +115,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
     def setup_log_frame(self):
         """ this function Setting UP the Frame for the Log Console with a text banner in the bottom of the UI
-        also design a scrollbar for Log Console """
+        also implement a scrollbar for Log Console """
         # Dark background
         logFrame = tk.Frame(self, bg='black')
         logFrame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
@@ -137,8 +135,20 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.log_listbox.config(yscrollcommand=scrollbar.set)
 
     def setup_progress_frame(self):
-        pass
+        """ this function Setting UP the Frame for the Decryption Progress Bar in the bottom of the Log Console """
+        self.progress_frame = tk.Frame(self, bg='black')
+        self.progress_frame.pack(fill=tk.X, padx=10, pady=20)
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure("Enhanced.Horizontal.TProgressbar", troughcolor='black', background='green', thickness=20)
 
+        self.progress = ttk.Progressbar(self.progress_frame, style="Enhanced.Horizontal.TProgressbar",
+                                        mode="determinate", orient=tk.HORIZONTAL, length=400)
+
+        self.progress.pack(fill=tk.X, expand=True)
+
+        self.progress_label = tk.Label(self.progress_frame, text="Decryption Progress: 0%", bg='black', fg='pink')
+        self.progress_label.pack()
 
 # Step 9: Running the Program
 if __name__ == "__main__":

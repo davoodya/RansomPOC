@@ -12,6 +12,9 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from datetime import datetime, timedelta
 
+from PIL.ImageOps import expand
+
+
 # Step 2.1: Defining Function to load the current path of this python file and join it to relative_path
 def resource_path(relative_path):
     # Get Directory name of the current python file
@@ -31,6 +34,8 @@ THANKS_PATH = resource_path("img/thank_you.png")
 class DecryptorApp(tk.Tk):
     def __init__(self):
         super().__init__()
+        self.log_listbox = None
+        self.key_entry = None
         self.iconbitmap(ICON_PATH)
         self.title("YakuzaLock")
         self.configure(bg='black')
@@ -67,15 +72,15 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         ransomNoteLabel.pack(side=tk.LEFT, padx=(10, 20))
 
         # Creating the text with suitable tags
-        ransomNoteLabel.insert(tk.END, " Proof of Concept: Yakuza Ransomware Simulation \n", "center_red")
-        ransomNoteLabel.insert(tk.END, "| Attention: Your Files Are Encrypted | \n\n", "center_red")
+        ransomNoteLabel.insert(tk.END, " Proof of Concept: Yakuza Ransomware Simulation \n", "center_green")
+        ransomNoteLabel.insert(tk.END, "| Attention: Your Files Are Encrypted | \n\n", "center_green")
         ransomNoteLabel.insert(tk.END, "This simulation is Only & Only for educational purposes and must not "
-                                       "be used maliciously. \n", "center_green")
-        ransomNoteLabel.insert(tk.END, "Users are fully accountable for their actions. \n", "center_white")
+                                       "be used maliciously. \n", "center_white")
+        ransomNoteLabel.insert(tk.END, "Users are fully accountable for their actions. \n\n", "center_white")
         ransomNoteLabel.insert(tk.END, "Your files have been encrypted using state-of-the-art "
                                        "encryption algorithms. To restore access to your data, "
-                                       "you must enter the decryption key. \n\n", "center_white")
-        ransomNoteLabel.insert(tk.END, " **=> To Recover Your Files: <=** \n", "center_yellow")
+                                       "you must enter the decryption key. \n\n", "center_red")
+        ransomNoteLabel.insert(tk.END, " ** To Recover Your Files: ** \n", "center_yellow")
         ransomNoteLabel.insert(tk.END, "Ping Us at => [ ransom@yakuzalock.xyz ]", "center_yellow")
 
         # Configure the Tags
@@ -87,9 +92,9 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
         # Apply tags for specif lines
         ransomNoteLabel.tag_add("center", "1.0","1.end")
-        ransomNoteLabel.tag_add("center_red", "1.0","2.end")
-        ransomNoteLabel.tag_add("center_green", "4.0","4.end")
-        ransomNoteLabel.tag_add("center_white", "5.0","6.end")
+        ransomNoteLabel.tag_add("center_green", "1.0","2.end")
+        ransomNoteLabel.tag_add("center_white", "3.0","5.end")
+        ransomNoteLabel.tag_add("center_red", "6.0","6.end")
         ransomNoteLabel.tag_add("center_yellow", "8.0","9.end")
 
         # Apply Configs and Setups
@@ -111,7 +116,25 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
                   relief=tk.FLAT).pack(side=tk.RIGHT, padx=(10, 0))
 
     def setup_log_frame(self):
-        pass
+        """ this function Setting UP the Frame for the Log Console with a text banner in the bottom of the UI
+        also design a scrollbar for Log Console """
+        # Dark background
+        logFrame = tk.Frame(self, bg='black')
+        logFrame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
+        # Banner at top of the Logs
+        bannerText = "Welcome to YakuzaLocker - [HACKER MODE]"
+
+        bannerLabel = tk.Label(logFrame, text=bannerText, bg='black', fg='orange', font=('Consolas', 12)) # Courier New
+        bannerLabel.pack(side=tk.TOP, fill=tk.X)
+
+        self.log_listbox = tk.Listbox(logFrame, height=6, width=50, bg='black', fg='#00FF00', font=('Consolas', 10))
+        self.log_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Scrollbar for the Listbox
+        scrollbar = tk.Scrollbar(logFrame, orient="vertical" ,command=self.log_listbox.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.log_listbox.config(yscrollcommand=scrollbar.set)
 
     def setup_progress_frame(self):
         pass

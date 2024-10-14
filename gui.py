@@ -1,5 +1,5 @@
-"""Ransom Tools
-Main GUI Layout of CryptoLock
+"""YakuzaLocker GUI
+Main GUI Layout of YakuzaLocker
 Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
@@ -11,7 +11,6 @@ from tkinter import messagebox, simpledialog
 from tkinter import ttk
 from PIL import Image, ImageTk
 from datetime import datetime, timedelta
-
 from PIL.ImageOps import expand
 
 

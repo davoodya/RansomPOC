@@ -1,2 +1,2 @@
-2024-10-15 21:50:19,750:INFO:[+] Encryption: Encryption Key Generated Successfully. 
-2024-10-15 21:50:19,750:ERROR:[-] Encryption: Encryption Key Generation Failed: Error 'utf-8' codec can't decode byte 0xeb in position 0: invalid continuation byte
+2024-10-15 23:38:39,432:INFO:[+] Encryption: Encryption Key Generated Successfully. 
+2024-10-15 23:38:39,433:INFO:[+] Important Files Created Successfully in H:/Repo/RansomPOC/test\D-Data.

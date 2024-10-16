@@ -397,6 +397,23 @@ class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
         self.iconPath = icon_path
         self.prompt = prompt
 
+    # Setup Dialog UI
+    def body(self, master):
+        # Set Icon
+        self.iconbitmap(self.iconPath)
+
+        # Create Label with prompt text & Pack it
+        Label(master, text=self.prompt).pack(pady=5)
+
+        # Create an Entry widget and pack it
+        self.key_entry = Entry(master)
+        self.key_entry.pack(pady=5)
+        return self.key_entry
+
+    def apply(self):
+        self.result = self.key_entry.get()
+
+
 
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class

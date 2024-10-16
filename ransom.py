@@ -20,6 +20,7 @@ from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 from requests import post, exceptions
 from time import sleep
+from PIL import Image, ImageTk
 
 
 """ Part 1: Application functions """
@@ -446,14 +447,38 @@ class CountdownDialog(Toplevel):
         self.attributes('-topmost', True)
         self.overrideredirect(True)
         self.grab_set()
-        self.center_windows()
+        self.center_window()
 
     def disable_event(self):
         pass
+
+    # Function to Setting up countdown dialog UI
     def init_ui(self):
+        # Set Position and Icon of Count Down Dialog UI
+        self.geometry("350x150")
+        self.iconbitmap(ICON_PATH)
+
+        # Open a Thank-You Image and resize it
+        thanksImage = Image.open(THANKS_PATH).resize((50, 50))
+        thanksPhoto = ImageTk.PhotoImage(thanksImage)
+
+        # Create an image label from thanksPhoto
+        # noinspection PyTypeChecker
+        label = Label(self, image=thanksPhoto, bg="#f0f0f0")
+        label.image = thanksPhoto
+        label.pack(side="left", padx=10, pady=20)
+
+        # Set Label on the Count-Down
+        self.countdownLabel = Label(self, text=f"Application will close in {self.countdownTime} seconds.", bg='#f0f0f0')
+        
+        # Packing Personalized Countdown
+        self.countdownLabel.pack(side="left", expand=True ,padx=20, pady=20)
+        self.update_countdown()
+
+    def center_window(self):
         pass
 
-    def center_windows(self):
+    def update_countdown(self):
         pass
 
 

@@ -15,6 +15,7 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
+from base64 import b64encode
 
 """ Part 1: Application functions """
 
@@ -255,6 +256,28 @@ Your Security Team
             logging.info(f"[+] User Manual Created Successfully in {directory_path}.")
         except Exception as e:
             logging.error(f"[-] Failed to create user manual. Error: {str(e)}")
+
+    # Function to save the encryption key locally
+    def save_key_locally(self):
+        # Create Hardcoded Path for saving key
+        keyPath = os.path.join('E:', 'encryption_key.txt')
+        try:
+            os.makedirs(os.path.dirname(keyPath), exist_ok=True)
+
+            # Write Machine id & Encryption key to keyPath file
+            with open(keyPath, "w") as file:
+                file.write(f"Machine ID: {self.machine_id}\n")
+                file.write(f"Encryption Key: {b64encode(self.key).decode('utf-8')}\n")
+
+            # Submit Info Log for the encryption key and the machine id saving
+            logging.info(f"[+] Encryption Key Saved Locally in the {keyPath}.")
+            return True
+        except Exception as e:
+            # Submit Error Log for Failed the encryption key and the machine id saving
+            logging.error(f"[-] Failed to save the encryption key locally: {str(e)}")
+            return False
+
+
 
 
 

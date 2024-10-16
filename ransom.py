@@ -440,7 +440,7 @@ class CountdownDialog(Toplevel):
     def __init__(self, parent, countdown_time, close_app_callback):
         super().__init__(parent)
         self.countdownTime = countdown_time
-        self.closeAppCallback = close_app_callback
+        self.close_app_callback = close_app_callback
         self.init_ui()
         self.protocol("WM_DELETE_WINDOW", self.disable_event)
         self.resizable(False, False)
@@ -475,11 +475,22 @@ class CountdownDialog(Toplevel):
         self.countdownLabel.pack(side="left", expand=True ,padx=20, pady=20)
         self.update_countdown()
 
+    # Function to Update Count Down Timer
+    def update_countdown(self):
+        if self.countdownTime > 0:
+            self.countdownLabel.config(text=f"Application will close in {self.countdownTime} seconds.")
+            self.countdownTime -= 1
+
+            # Repeat CountDownDialog every 1000 ms, until countdownTime reached below 0 and be negative
+            self.after(1000, self.update_countdown)
+        else:
+            self.countdownLabel.config(text="Closing application now...")
+            self.close_app_callback()
+
     def center_window(self):
         pass
 
-    def update_countdown(self):
-        pass
+
 
 
 if __name__ == "__main__":

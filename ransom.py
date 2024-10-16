@@ -433,6 +433,28 @@ class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
         # Set the Position of the window to the center of the screen
         self.geometry(f"+{positionRight}+{positionDown}")
 
+# Define CountdownDialog class for countdown interactions
+class CountdownDialog(Toplevel):
+    """ in this class, we have a countdown timer to show the user how much time left to enter the decryption key """
+    def __init__(self, parent, countdown_time, close_app_callback):
+        super().__init__(parent)
+        self.countdownTime = countdown_time
+        self.closeAppCallback = close_app_callback
+        self.init_ui()
+        self.protocol("WM_DELETE_WINDOW", self.disable_event)
+        self.resizable(False, False)
+        self.attributes('-topmost', True)
+        self.overrideredirect(True)
+        self.grab_set()
+        self.center_windows()
+
+    def disable_event(self):
+        pass
+    def init_ui(self):
+        pass
+
+    def center_windows(self):
+        pass
 
 
 if __name__ == "__main__":

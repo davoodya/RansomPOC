@@ -274,8 +274,31 @@ Your Security Team
             return True
         except Exception as e:
             # Submit Error Log for Failed the encryption key and the machine id saving
-            logging.error(f"[-] Failed to save the encryption key locally: {str(e)}")
+            logging.error(f"[-] Failed to save the encryption key locally. Error: {str(e)}")
             return False
+
+
+    # Function to save the machine ID
+    def save_machine_id(self, directory_path):
+        # Create Hardcoded Path for Machine_id.txt which store the machine id
+        machineIdPath = os.path.join(directory_path, "Machine_id.txt")
+        try:
+            # Create directory_path if the directory doesn't exist
+            os.makedirs(directory_path, exist_ok=True)
+
+            # Open Machine_id.txt and write 'self.machine_id' to this file
+            with open(machineIdPath, "w") as file:
+                file.write(self.machine_id)
+
+            # Submit Info Log for saving machine ID
+            logging.info(f"[+] Machine ID Saved Successfully in {machineIdPath}.")
+
+        except Exception as e:
+            # Submit Error Log for Failed the encryption key and the machine id saving
+            logging.error(f"[-] Failed to save the Machine ID locally. Error: {str(e)}")
+            return False
+
+
 
 
 

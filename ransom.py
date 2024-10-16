@@ -413,6 +413,26 @@ class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
     def apply(self):
         self.result = self.key_entry.get()
 
+    # Create Function to Center Position the dialog window
+    def center_windows(self):
+        """ this function sets the dialog window position in the center of the screen """
+        self.update_idletasks()
+
+        # Get current window width and height
+        windowWidth = self.winfo_width()
+        windowHeight = self.winfo_height()
+
+        # Get Screen width and height
+        screenWidth = self.winfo_screenwidth()
+        screenHeight = self.winfo_screenheight()
+
+        # Calculate the Position of Screen Center
+        positionRight = int(screenWidth/2 - windowWidth/2)
+        positionDown = int(screenHeight/2 - windowHeight/2)
+
+        # Set the Position of the window to the center of the screen
+        self.geometry(f"+{positionRight}+{positionDown}")
+
 
 
 if __name__ == "__main__":

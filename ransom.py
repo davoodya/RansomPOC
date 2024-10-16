@@ -487,10 +487,23 @@ class CountdownDialog(Toplevel):
             self.countdownLabel.config(text="Closing application now...")
             self.close_app_callback()
 
+    # Function to Center Position the countdown timer
     def center_window(self):
-        pass
+        self.update_idletasks()
+        # Get current window width and height
+        windowWidth = self.winfo_width()
+        windowHeight = self.winfo_height()
 
+        # Get current screen width and height
+        screenWidth = self.winfo_screenwidth()
+        screenHeight = self.winfo_screenheight()
 
+        # Calculate Center Position of Center of Screen
+        positionRight = int(screenWidth/2 - windowWidth/2)
+        positionDown = int(screenHeight/2 - windowHeight/2)
+
+        # Set count down in the Center of the Screen
+        self.geometry(f"+{positionRight}+{positionDown}")
 
 
 if __name__ == "__main__":

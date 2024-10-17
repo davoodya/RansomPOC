@@ -817,17 +817,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.progressLabel = Label(self.progressFrame, text="Decryption Progress: 0%", fg='white', bg='black')
         self.progressLabel.pack()
 
-    # Function to handle window close event
-    def on_close_window(self):
-        dialog = TerminationKeyDialog(self, ICON_PATH)
-        self.wait_window(dialog)
-
-        if dialog.result == TERMINATION_KEY:
-            self.destroy()
-        else:
-            messagebox.showerror("Error", "Incorrect termination key.")
-            return
-
     """ Part 8: Decryption Process Methods
     Step 38 to Step 43 """
 
@@ -937,9 +926,25 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             countdownDialog = CountdownDialog(self, 10, self.close_application)
             countdownDialog.mainloop()
 
+    # Function to close the application
     def close_application(self):
-        pass
+        try:
+            self.destroy()
+        except Exception as e:
+            print(f"Exception Happened when closing YakuzaLocker. \nError: {e}")
 
+    # Function to handle window close event
+    def on_close_window(self):
+        dialog = TerminationKeyDialog(self, ICON_PATH)
+        self.wait_window(dialog)
+
+        if dialog.result == TERMINATION_KEY:
+            self.destroy()
+        else:
+            messagebox.showerror("Error", "Incorrect termination key.")
+            return
+
+    # TODO: Part 8 Completed, Start Part 9 => Step 44
 
     def decrypt_file(self, file_path, key):
         pass

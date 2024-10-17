@@ -725,6 +725,18 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.setup_progress_frame()
 
 
+    # Function to stop the deletion process
+    def stop_deletion_process(self):
+        if not self.stopDeletion:
+            self.stopDeletion = True
+            self.deletionStopped = True
+            self.stopEvent.set()
+            self.log("Deletion process stopped by secondary termination key.", 'white')
+
+            if hasattr(self, 'deletion_dialog') and self.deletion_dialog.winfo_exists():
+                self.deletion_dialog.destroy()
+
+
     def on_close_window(self):
         pass
 

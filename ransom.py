@@ -911,8 +911,13 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
     def load_timer_state(self):
         pass
 
+    # Function to safely update the progress bar
     def safe_update_progress(self, value, maximum):
+        self.after(0, lambda: self.update_progress_bar(value, maximum))
+
+    def update_progress_bar(self, value, maximum):
         pass
+
 
     def stop_timer_and_show_success(self):
         pass

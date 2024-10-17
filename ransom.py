@@ -586,7 +586,7 @@ class DeletionCountdownDialog(Toplevel):
 Step 28 to Step 30"""
 
 class DecryptorApp(Tk):
-    """ this is the main class of decryption process
+    """ this is main the main class of decryption process
     actually in this class, we have all tools for decrypting the files as methods and functions """
     def __init__(self):
         super().__init__()

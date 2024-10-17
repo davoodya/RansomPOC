@@ -900,6 +900,11 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             self.after(0, lambda: messagebox.showerror('Decryption Failed',
                                                        '[-] Failed to decrypt one or more files. Please check the decryption key and try again.'))
 
+    # Function to Show Incomplete Decryption Message Dialog
+    def show_incomplete_message(self, decrypted_count, total_files):
+        messagebox.showwarning("Decryption Incomplete",
+                               f"Decryption completed for {decrypted_count} out of {total_files} files.")
+
     # TODO Until Step 40, define show_incomplete_message() function
 
 

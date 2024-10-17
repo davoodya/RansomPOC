@@ -12,7 +12,8 @@ from datetime import datetime
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
-from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox
+from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox, Frame, BOTH, X, \
+    TOP, LEFT, Scrollbar
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -678,7 +679,25 @@ class DecryptorApp(Tk):
 
     # Function to setting up the log frame
     def setup_log_frame(self):
-        self.logListbox = Listbox()
+        # Create a frame for the log and pack it
+        logFrame = Frame(self, bg='black')
+        logFrame.pack(fill=BOTH, expand=True, padx=10, pady=10)
+
+        # Create a label for the banner
+        bannerText = "Welcome to YakuzaLocker - [HACKER MODE]"
+        bannerLabel = Label(logFrame, text=bannerText, fg='orange', bg='black', font=('Courier New', 12))
+        bannerLabel.pack(side=TOP, fill=X)
+
+        # Create a List box for the logs
+        self.logListbox = Listbox(logFrame, width=50, height=6, bg='black', fg='#00FF00', font=('Courier New', 10))
+        self.logListbox.pack(side=LEFT, fill=BOTH, expand=True)
+
+        # Create a scrollbar for the log listbox and append it to the logListbox
+        scrollbar = Scrollbar(logFrame, orient="vertical", command=self.logListbox.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.logListbox.config(yscrollcommand=scrollbar.set)
+
+
 
 # if __name__ == "__main__":
 #     # Create an instance of the EncryptionTool class

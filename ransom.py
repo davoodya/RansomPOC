@@ -13,7 +13,7 @@ from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
 from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox, Frame, BOTH, X, \
-    TOP, LEFT, Scrollbar, Text
+    TOP, LEFT, Scrollbar, Text, RIGHT
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -748,7 +748,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             messagebox.showerror("Error", "Incorrect secondary termination key.")
 
 
-
     def on_close_window(self):
         pass
 
@@ -788,10 +787,26 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         scrollbar.pack(side="right", fill="y")
         self.logListbox.config(yscrollcommand=scrollbar.set)
 
+    # Function to setting up the key frame
     def setup_key_frame(self):
-        pass
+        # Create a frame for the key and pack it
+        keyFrame = Frame(self, bg='black')
+        keyFrame.pack(fill=X, padx=10, pady=(10, 5))
+
+        # Create Entry and pack it for give key from user
+        self.keyEntry = Entry(keyFrame, fg='black', font=('Helvetica CE', 12), bd=1, relief=FLAT)
+        self.keyEntry.pack(fill=X, side=LEFT, expand=True, padx=(10, 0), ipady=8)
+
+        # Create Button to execute start_decryption() function
+        Button(keyFrame, text="START DECRYPTION", bg='#d9534f', fg='white', font=('Helvetica CE', 12), relief=FLAT,
+               command=self.start_decryption).pack(side=RIGHT, padx=(10, 0))
+
+
 
     def setup_progress_frame(self):
+        pass
+
+    def start_decryption(self):
         pass
 
 # if __name__ == "__main__":

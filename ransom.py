@@ -12,7 +12,7 @@ from datetime import datetime
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
-from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk
+from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox
 from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
@@ -663,8 +663,22 @@ class DecryptorApp(Tk):
     def load_timer_state(self):
         pass
 
+    # Function to submit log messages
     def log(self, message, color='green'):
-        pass
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        formattedMessage = f"[{timestamp}] {message}"
+        if self.winfo_exists():
+            self.after(0, lambda: self._update_log_listbox(formattedMessage, color))
+
+    # Function to update the log listbox
+    def _update_log_listbox(self, message, color):
+        self.logListbox.insert(END, message)
+        self.logListbox.itemconfig(END, {'fg': color})
+        self.logListbox.see(END)
+
+    # Function to setting up the log frame
+    def setup_log_frame(self):
+        self.logListbox = Listbox()
 
 # if __name__ == "__main__":
 #     # Create an instance of the EncryptionTool class

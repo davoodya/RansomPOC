@@ -62,3 +62,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 }
+
+// Step 4: Insert user data into the database
+if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+    $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+    if ($stmt = $pdo->prepare($sql)) {
+        $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
+
+
+        $param_username = $username;
+        $param_password = password_hash($password, PASSWORD_DEFAULT);
+
+
+        if ($stmt->execute()) {
+            header("location: login.php");
+        } else {
+            echo "Something went wrong. Please try again later.";
+        }
+    }
+    unset($stmt);
+}
+unset($pdo);
+
+?>

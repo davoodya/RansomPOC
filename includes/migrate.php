@@ -67,11 +67,11 @@ foreach ($migrations as $migrationName => $sql) {
 		}
 
 	} else {
-		echo "<div class='message info'>Migration $migrationName has already been applied. Skipping .< /div>";
+		echo "<div class='message info'>Migration $migrationName has already been applied. Skipping .</div>";
 	}
 }
 
 
 // Step 10: Print migration completion message and provide "Go Back" link
-echo "<div class='message success'>Migration process completed .< /div>";
+echo "<div class='message success'>Migration process completed .</div>";
 echo "<a href='" . getGoBackLink() . "' class='button'>Go Back</a>";

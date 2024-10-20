@@ -12,7 +12,7 @@ body {
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
-    color: #e1ffe1;
+    color: #00ff00;
     font-size: 1.2rem;
 }
 
@@ -33,7 +33,7 @@ body {
 .info {
     background-color: #003366;  /* Dark blue background */
     border: 1px solid #00ccff;  /* Bright blue border */
-    color: #e3f3f7;  /* Light blue text */
+    color: #00ccff;  /* Light blue text */
 }
 
 /* Step 6: Button Styling */

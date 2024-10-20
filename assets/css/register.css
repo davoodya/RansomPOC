@@ -33,3 +33,9 @@ body {
 	color: #33ff33; /* Bright green header */
 	text-align: center;
 }
+
+/* Step 1.5: Form Styling */
+.login form {
+	display: flex;
+	flex-direction: column;
+}

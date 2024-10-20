@@ -27,3 +27,9 @@ body {
 	max-width: 400px;
 	width: 90%;
 }
+
+/* Step 1.4: Header Styling */
+.login h2 {
+	color: #33ff33; /* Bright green header */
+	text-align: center;
+}

@@ -51,3 +51,15 @@ body {
 	margin-bottom: 5px;
 	display: block;
 }
+
+/* Step 1.8: Input Field Styling */
+.login input[type="text"],
+.login input[type="password"] {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	background-color: #1a1a1a; /* Darker input fields*/
+	color: #33ff33; /* Bright green text */
+	border: 1px solid #33ff33; /* Bright green border */
+	border-radius: 5px;
+}

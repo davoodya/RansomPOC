@@ -103,3 +103,10 @@ body {
 	margin-top: 10px;
 }
 
+/* Step 2: Responsive CSS */
+@media (max-width: 768px) {
+	.login {
+		max-width: 90%;
+	}
+}
+

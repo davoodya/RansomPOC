@@ -53,3 +53,20 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS applied migrations (
 // Step 8: Get the list of already applied migrations
 $statement = $pdo->query("SELECT migration_name FROM applied_migrations");
 $appliedMigrations = $statement->fetchAll(PDO::FETCH_COLUMN);
+
+// Step 9: Apply Pending Migration
+foreach ($migration as $migrationName => $sql) {
+    if (!in_array($migrationName, $appliedMigrations)) {
+		try {
+			$pdo->exec($sql);
+			$statement = $pdo->prepare("INSERT INTO applied_migrations (migration_name) VALUES (?)");
+			$statement->execute([$migrationName]);
+			echo "<div class='message success'>Successfully applied migration: $migrationName</div>";
+		} catch (PDOException $e) {
+			echo "<div class='message error'>Failed to apply migration $migrationName: " . $e->getMessage() . "</div>";
+		}
+
+	} else {
+		echo "<div class='message info'>Migration $migrationName has already been applied. Skipping .< /div>";
+	}
+}

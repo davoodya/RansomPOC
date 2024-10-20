@@ -76,3 +76,16 @@ body {
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
+
+
+.login input[type="submit"]:hover,
+.login input[type="reset"]:hover {
+	background-color: #005500; /* Slightly lighter green for button hover */
+}
+
+
+/* Step 1.10: Link Styling */
+.login a {
+	color: #33ff33; /* Bright green link */
+	text-decoration: none;
+}

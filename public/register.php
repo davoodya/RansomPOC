@@ -91,8 +91,38 @@ unset($pdo);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register Yakuza-Locker C&C-POC</title>
+    <title>Register YakuzaLocker C&C</title>
     <link rel="stylesheet" href="../assets/css/register.css">
 </head>
+
+<body>
+    <div class="login">
+        <h2>Register to YakuzaLocker C&C</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div>
+                <label>Username</label>
+                <input type="text" name="username" value="<?php echo $username; ?>">
+                <span><?php echo $username_err; ?></span>
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password" name="password" value="<?php echo $password; ?>">
+                <span><?php echo $password_err; ?></span>
+            </div>
+            <div>
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" value="<?php echo $confirm_password; ?>">
+                <span><?php echo $confirm_password_err; ?></span>
+            </div>
+            <div>
+                <input type="submit" value="Register">
+                <input type="reset" value="Reset">
+            </div>
+            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+        </form>
+    </div>
+
+</body>
+
 
 </html>

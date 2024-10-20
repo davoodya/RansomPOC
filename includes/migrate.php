@@ -42,3 +42,11 @@ $migrations = [
 		ALTER TABLE machine_keys ADD COLUMN IF NOT EXISTS status VARCHAR(255) DEFAULT 'pending';
 	",	
 ];
+
+// Step 7: Check the Applied Migrations Table
+$pdo->exec("CREATE TABLE IF NOT EXISTS applied migrations (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	migration_name VARCHAR(255),
+	date_applied DATETIME DEFAULT CURRENT_TIMESTAMP
+    )");
+

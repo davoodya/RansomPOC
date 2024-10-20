@@ -39,3 +39,15 @@ body {
 	display: flex;
 	flex-direction: column;
 }
+
+/* Step 1.6: Form Elements Container Styling */
+.login form div {
+	margin: 10px 0;
+}
+
+/* Step 1.7: Label Styling */
+.login form label {
+	color: #33ff33; /* Bright green label */
+	margin-bottom: 5px;
+	display: block;
+}

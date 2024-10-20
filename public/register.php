@@ -86,3 +86,13 @@ if (empty($username_err) && empty($password_err) && empty($confirm_password_err)
 unset($pdo);
 
 ?>
+
+<!-- Step 5: HTML Structure for registration form -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Yakuza-Locker C&C-POC</title>
+    <link rel="stylesheet" href="../assets/css/register.css">
+</head>
+
+</html>

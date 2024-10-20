@@ -89,3 +89,17 @@ body {
 	color: #33ff33; /* Bright green link */
 	text-decoration: none;
 }
+
+.login a:hover {
+	text-decoration: underline;
+}
+
+
+/* Step 1.11: Error Message Styling */
+.login .error {
+	color: #ff3333; /* Red text for errors*/
+	text-align: center;
+	font-weight: bold;
+	margin-top: 10px;
+}
+

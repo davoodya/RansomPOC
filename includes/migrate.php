@@ -50,3 +50,6 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS applied migrations (
 	date_applied DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
 
+// Step 8: Get the list of already applied migrations
+$statement = $pdo->query("SELECT migration_name FROM applied_migrations");
+$appliedMigrations = $statement->fetchAll(PDO::FETCH_COLUMN);

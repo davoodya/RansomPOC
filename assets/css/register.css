@@ -63,3 +63,16 @@ body {
 	border: 1px solid #33ff33; /* Bright green border */
 	border-radius: 5px;
 }
+
+/* Step 1.9: Button Styling */
+.login input[type="submit"],
+.login input[type="reset"] {
+	padding: 10px 20px;
+	margin-top: 10px;
+	background-color: #003300; /* Dark green background for buttons */
+	color: #33ff33;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}

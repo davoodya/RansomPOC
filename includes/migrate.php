@@ -44,7 +44,7 @@ $migrations = [
 ];
 
 // Step 7: Check the Applied Migrations Table
-$pdo->exec("CREATE TABLE IF NOT EXISTS applied migrations (
+$pdo->exec("CREATE TABLE IF NOT EXISTS applied_migrations (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	migration_name VARCHAR(255),
 	date_applied DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -55,7 +55,7 @@ $statement = $pdo->query("SELECT migration_name FROM applied_migrations");
 $appliedMigrations = $statement->fetchAll(PDO::FETCH_COLUMN);
 
 // Step 9: Apply Pending Migration
-foreach ($migration as $migrationName => $sql) {
+foreach ($migrations as $migrationName => $sql) {
     if (!in_array($migrationName, $appliedMigrations)) {
 		try {
 			$pdo->exec($sql);

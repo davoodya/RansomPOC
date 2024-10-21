@@ -18,6 +18,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'export') {
     header('Content-Disposition: attachment; filename="machine_keys.csv"');
     $output = fopen("php://output", "w");
     fputcsv($output, array('S.N', 'Machine ID', 'Encryption Key', 'Received Date', 'Status'));
+    /** @noinspection ALL */
     $stmt = $pdo->query("SELECT machine_id, encryption_key, received_date, status FROM machine_keys ORDER BY received_date DESC");
     $sn = 1;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -25,4 +26,19 @@ if (isset($_GET['action']) && $_GET['action'] == 'export') {
     }
     fclose($output);
     exit();
+}
+
+
+// Step 4: Handle Mark as Paid
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['markPaid'])) {
+
+    $machineId = $_POST['machineId'];
+    /** @noinspection ALL */
+    $updateStmt = $pdo->prepare("UPDATE machine_keys SET status = 'paid' WHERE key_id = ?");
+
+    if ($updateStmt->execute([$machineId])) {
+        header("Location: " . $_SERVER['PHP_SELF']); // Refresh the page
+
+        exit;
+    }
 }

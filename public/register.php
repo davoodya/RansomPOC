@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Matrix Registration</title>
+    <title>Register to Matrix</title>
     <link rel="stylesheet" href="../assets/css/Register.css">
 </head>
 

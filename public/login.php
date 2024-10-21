@@ -50,3 +50,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     unset($pdo);
 }
 
+
+
+// close php codes using ommit tag
+?>
+
+<!-- Step 4: Begin HTML Sections -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter the Matrix</title>
+    <link rel="stylesheet" href="../assets/css/login.css">  <!-- Link to the CSS file for styling -->
+</head>
+
+<body>
+<div class="hacker-login">
+    <h2>Login to Yakuza Locker C&C</h2>
+    <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <div class="hacker-input">
+            <label>Username</label>
+            <input type="text" name="username" value="<?= $username; ?>" required>
+        </div>
+        <div class="hacker-input">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="hacker-button">
+            <input type="submit" value="Login">
+        </div>
+        <?php if (!empty($err)) {
+            echo '<div class="error">' . htmlspecialchars($err) . '</div>';
+        } ?>
+    </form>
+</div>
+
+<script src="../assets/js/login.js"></script>
+</body>
+</html>
+

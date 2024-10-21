@@ -85,3 +85,12 @@ border-radius: 10px;
     background-color: #28a745; /* Slightly darker green on hover */
 }
 
+
+/* Step 8: Error message styling */
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+

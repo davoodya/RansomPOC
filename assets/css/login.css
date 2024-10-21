@@ -5,3 +5,15 @@
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace; /* Classic terminal font */
 }
+
+/* Step 2: Body styling */
+body {
+    background-color: #0f0f0f; /* Dark background for terminal feel */
+    color: #33ff33; /" Neon green text to mimic terminal display */
+display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+

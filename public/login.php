@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-// close php codes using ommit tag
+// close php codes using omit tag
 ?>
 
 <!-- Step 4: Begin HTML Sections -->

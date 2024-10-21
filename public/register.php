@@ -66,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Step 4: Insert user data into the database
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+
         $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
         if ($stmt = $pdo->prepare($sql)) {
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
@@ -106,6 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span><?php echo $username_err; ?></span>
             </div>
             <div>
+
                 <label>Password</label>
                 <input type="password" name="password" value="<?php echo $password; ?>">
                 <span><?php echo $password_err; ?></span>

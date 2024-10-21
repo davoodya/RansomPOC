@@ -109,8 +109,6 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced Dashboard</title>
-
-    <!--suppress ALL-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -121,8 +119,29 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
+
 <body>
-<div class="wrapper">
+    <div class="wrapper">
+    <!-- Step 10: Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <img src="<?= htmlspecialchars($currentUserInfo['profile_pic'] ?: '../assets/img/default-avatar.png') ?>" alt="User Avatar" class="img-fluid rounded-circle mb-2">
+            <h4 class="text-center text-white"><?= htmlspecialchars($currentUserInfo["username"]); ?></h4>
+        </div>
+        <ul class="list-unstyled components">
+            <li class="nav-item">
+                <a class="nav-link active text-white" href="#"><i class="fas fa-home" style="color:#0f0;"></i> Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="profile.php"><i class="fas fa-user" style="color:#0f0;"></i> Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="logout.php"><i class="fas fa-sign-out-alt" style="color:#0f0;"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+
 
 
 

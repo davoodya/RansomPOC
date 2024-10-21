@@ -99,3 +99,30 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // PHP Codes end here-
 
+?>
+
+<!-- Step 9: Begin HTML Section -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Step 9.1: HTML Head Section -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dashboard</title>
+
+    <!--suppress ALL-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <style>
+        .fa-red, .fas {
+            color: red !important;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+
+

@@ -94,3 +94,10 @@ border-radius: 10px;
     margin-top: 10px;
 }
 
+
+/* Step 9: Responsive adjustments */
+@media (max-width: 768px) {
+    .hacker-login {
+        max-width: 90%;
+    }
+}

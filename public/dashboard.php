@@ -74,3 +74,19 @@ $machineTerminatedStmt = $pdo->query("SELECT COUNT(*) AS machine_terminated FROM
 $machineTerminated = $machineTerminatedStmt->fetch(PDO::FETCH_ASSOC)['machine_terminated'];
 
 $activeWarriors = $totalEncrypted - $machinePaid;
+
+// Step 7: Fetch current user information
+$currentUserInfo = null;
+
+if (isset($_SESSION["user_id"])) {
+    /** @noinspection ALL */
+    $sql = "SELECT username, profile_pic FROM users WHERE user_id = :user_id";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->bindParam(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    $currentUserInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+}

@@ -62,3 +62,26 @@ border-radius: 10px;
     border-radius: 5px;
     margin-top: 5px;
 }
+
+/* Step 7: Button styling */
+.hacker-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.hacker-button input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #33ff33; /* Neon green button*/
+    color: #000; /* Black text for contrast */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.hacker-button input[type="submit"]:hover {
+    background-color: #28a745; /* Slightly darker green on hover */
+}
+

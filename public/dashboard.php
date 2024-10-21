@@ -141,6 +141,14 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </ul>
     </nav>
 
+    <!-- Step 11: Page Content -->
+    <div id="content">
+        <div class="container-fluid">
+            <!-- Step 12: Welcome Message -->
+            <h1 class="text-white">Welcome back, <?= htmlspecialchars($_SESSION["username"]); ?>!</h1>
+
+
+
 
 
 

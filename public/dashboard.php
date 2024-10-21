@@ -90,3 +90,12 @@ if (isset($_SESSION["user_id"])) {
 
     $currentUserInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+// Step 8: Fetch machine keys data for display
+/** @noinspection ALL */
+$stmt = $pdo->query("SELECT key_id, machine_id, encryption_key, received_date, status, stop_signal FROM machine_keys ORDER BY received_date DESC");
+
+$keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// PHP Codes end here-
+

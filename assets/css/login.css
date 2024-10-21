@@ -17,3 +17,15 @@ display: flex;
     margin: 0;
 }
 
+/* Step 3: Container styling for the login form */
+.hacker-login {
+    background-color: #121212; /* Slightly lighter dark background for contrast */
+    border: 1px solid #33ff33; /" Neon green border "/
+border-radius: 10px;
+    box-shadow: 0 0 20px #33ff33; /* Glowing effect*/
+    max-width: 400px;
+    width: 90%;
+    padding: 20px;
+    opacity: 0.95;
+}
+

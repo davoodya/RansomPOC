@@ -41,3 +41,24 @@ border-radius: 10px;
     display: flex;
     flex-direction: column;
 }
+
+
+/* Step 6: Input container styling */
+.hacker-input {
+    margin: 15px 0;
+}
+
+.hacker-input label {
+    color: #33ff33;
+    font-size: 18px;
+}
+
+.hacker-input input[type="text"],
+.hacker-input input[type="password"] {
+    padding: 10px;
+    background-color: #000; /* Dark fields to match the theme"/
+	border: 1px solid #33ff33; /* Neon green outline */
+    color: #33ff33; /* Neon green text */
+    border-radius: 5px;
+    margin-top: 5px;
+}

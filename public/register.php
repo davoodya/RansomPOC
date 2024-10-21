@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Register YakuzaLocker Command & Control</title>
+    <title>Matrix Registration</title>
     <link rel="stylesheet" href="../assets/css/Register.css">
 </head>
 

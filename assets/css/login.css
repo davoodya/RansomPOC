@@ -9,32 +9,66 @@
 /* Step 2: Body styling */
 body {
     background-color: #0f0f0f; /* Dark background for terminal feel */
-    color: #33ff33; /" Neon green text to mimic terminal display */
-display: flex;
+    color: #33ff33; /* Neon green text to mimic terminal display */
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    overflow: hidden;
+    background-image: radial-gradient(circle, rgba(51, 255, 51, 0.1) 10%, transparent 10%), radial-gradient(circle, rgba(51, 255, 51, 0.1) 20%, transparent 20%);
+    background-size: 20px 20px;
+    animation: background-animation 5s linear infinite;
+}
+
+@keyframes background-animation {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 100px 100px, -100px -100px;
+    }
 }
 
 /* Step 3: Container styling for the login form */
 .hacker-login {
     background-color: #121212; /* Slightly lighter dark background for contrast */
-    border: 1px solid #33ff33; /" Neon green border "/
-border-radius: 10px;
-    box-shadow: 0 0 20px #33ff33; /* Glowing effect*/
+    border: 2px solid #33ff33; /* Neon green border */
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(51, 255, 51, 0.8), 0 0 50px rgba(51, 255, 51, 0.5); /* Glowing effect */
     max-width: 400px;
     width: 90%;
-    padding: 20px;
-    opacity: 0.95;
+    padding: 30px;
+    opacity: 0.9;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.hacker-login:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    opacity: 1;
 }
 
 /* Step 4: Heading styling */
 .hacker-login h2 {
     text-align: center;
     color: #33ff33;
+    font-size: 28px;
+    text-shadow: 0 0 10px #33ff33;
+    animation: text-flicker 2s infinite alternate;
 }
 
+@keyframes text-flicker {
+    0% {
+        opacity: 1;
+        text-shadow: 0 0 10px #33ff33;
+    }
+    100% {
+        opacity: 0.7;
+        text-shadow: 0 0 20px #00ff00;
+    }
+}
 
 /* Step 5: Form styling */
 .hacker-login form {
@@ -42,25 +76,34 @@ border-radius: 10px;
     flex-direction: column;
 }
 
-
 /* Step 6: Input container styling */
 .hacker-input {
     margin: 15px 0;
+    position: relative;
 }
 
 .hacker-input label {
     color: #33ff33;
     font-size: 18px;
+    transition: color 0.3s ease;
 }
 
 .hacker-input input[type="text"],
 .hacker-input input[type="password"] {
-    padding: 10px;
-    background-color: #000; /* Dark fields to match the theme"/
-	border: 1px solid #33ff33; /* Neon green outline */
+    padding: 12px;
+    background-color: #000; /* Dark fields to match the theme */
+    border: 1px solid #33ff33; /* Neon green outline */
     color: #33ff33; /* Neon green text */
     border-radius: 5px;
     margin-top: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hacker-input input[type="text"]:focus,
+.hacker-input input[type="password"]:focus {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
 }
 
 /* Step 7: Button styling */
@@ -69,22 +112,22 @@ border-radius: 10px;
     margin-top: 20px;
 }
 
-
 .hacker-button input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #33ff33; /* Neon green button*/
+    padding: 12px 25px;
+    background-color: #33ff33; /* Neon green button */
     color: #000; /* Black text for contrast */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.2s ease;
+    box-shadow: 0 0 15px rgba(51, 255, 51, 0.7);
 }
 
 .hacker-button input[type="submit"]:hover {
     background-color: #28a745; /* Slightly darker green on hover */
+    transform: scale(1.1); /* Button grows on hover */
 }
-
 
 /* Step 8: Error message styling */
 .error {
@@ -92,12 +135,20 @@ border-radius: 10px;
     text-align: center;
     font-weight: bold;
     margin-top: 10px;
+    animation: shake 0.5s ease-in-out;
 }
 
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
 
 /* Step 9: Responsive adjustments */
 @media (max-width: 768px) {
     .hacker-login {
-        max-width: 90%;
+        max-width: 95%;
     }
 }

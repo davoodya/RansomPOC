@@ -42,3 +42,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['markPaid'])) {
         exit;
     }
 }
+
+// Step 5: Handle Termination Signal Update
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['terminate'])) {
+
+    $machineId = $_POST['machineId'];
+    /** @noinspection ALL */
+    $terminateStmt = $pdo->prepare("UPDATE machine_keys SET status = 'terminated' WHERE id = ? AND stop_signal = 1");
+
+    if ($terminateStmt->execute([$machineId])) {
+        header("Location: " . $_SERVER['PHP_SELF']); // Refresh the page
+        exit;
+    }
+}

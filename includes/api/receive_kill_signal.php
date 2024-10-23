@@ -35,6 +35,7 @@ if (isset($_POST['machine_id'])) {
         $response['error'] = 'PDOException: ' . $e->getMessage();
     }
 } else {
-    passthru('echo "Machine ID not provided."');
+    // Step 4: Handle missing machine_id in the POST request
+    $response['error'] = 'Machine ID not provided.';
 }
 

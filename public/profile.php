@@ -99,3 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 }
 
+// PHP Codes finished here
+?>
+
+<!-- HTML Codes start here -->
+

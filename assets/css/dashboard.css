@@ -89,3 +89,9 @@ body {
         z-index: 9999;
     }
 }
+
+/* Step 6: Styling for table hover for better visibility */
+.table-hover tbody tr:hover {
+    background-color: #28a745;
+    color: #fff;
+}

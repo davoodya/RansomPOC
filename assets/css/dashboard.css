@@ -31,3 +31,18 @@ body {
     background-color: #2d2d2d;
     text-align: center;
 }
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: #ff8c00; /* Maintain this color for clarity */
+}
+
+#sidebar ul li a:hover {
+    color: #ffffff; /* Clear visibility on hover */
+}

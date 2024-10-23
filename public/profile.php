@@ -131,8 +131,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Step 7: Profile update form -->
     <form action="profile.php" method="post" enctype="multipart/form-data">
         <div class="input-container">
-            <label>Username:</label>
-            <input type="text" name="username" value="<?= htmlspecialchars($currentUser['username']) ?>" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<?= htmlspecialchars($currentUser['username']) ?>" required>
         </div>
         <div class="input-container">
             <label>Profile Picture:</label>
@@ -143,12 +143,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="file" name="profile_pic">
         </div>
         <div class="input-container">
-            <label>Password:</label>
+            <label for="password">Password:</label>
             <input type="password" id="password" name="new_password">
+            <label for="show-password"></label>
             <input type="checkbox" id="show-password"> Show Password
         </div>
         <div class="input-container">
-            <label>Confirm Password:</label>
+            <label for="confirm-password">Confirm Password:</label>
             <input type="password" id="confirm-password" name="confirm_new_password">
         </div>
         <input type="submit" value="Update Profile">

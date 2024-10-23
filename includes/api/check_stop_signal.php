@@ -14,4 +14,12 @@ if (isset($_GET['machine_id'])) {
     $machine_id = $_GET['machine_id'];
     $stmt = $pdo->prepare("SELECT stop_signal FROM machine_keys WHERE machine_id = :machine_id");
     $stmt->bindParam(':machine_id', $machine_id);
+
+    // Step 4.1: Execute the prepared statement and fetch the result
+    if ($stmt->execute()) {
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode(['stop_signal' => $result['stop_signal'] ?? 0]);
+    } else {
+        passthru('echo "Error fetching stop signal."');
+    }
 }

@@ -39,3 +39,6 @@ if (isset($_POST['machine_id'])) {
     $response['error'] = 'Machine ID not provided.';
 }
 
+// Step 5: Return the response as JSON
+echo json_encode($response);
+?>

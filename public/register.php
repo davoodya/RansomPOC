@@ -102,20 +102,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Register to YakuzaLocker C&C</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div>
-                <label>Username</label>
-                <input type="text" name="username" value="<?php echo $username; ?>">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="<?php echo $username; ?>">
                 <span><?php echo $username_err; ?></span>
             </div>
             <div>
-
-                <label>Password</label>
-                <input type="password" name="password" value="<?php echo $password; ?>">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" value="<?php echo $password; ?>">
                 <span><?php echo $password_err; ?></span>
             </div>
             <div>
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" value="<?php echo $confirm_password; ?>">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" value="<?php echo $confirm_password; ?>">
                 <span><?php echo $confirm_password_err; ?></span>
+
             </div>
             <div>
                 <input type="submit" value="Register">

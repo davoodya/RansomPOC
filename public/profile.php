@@ -155,11 +155,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
     <!-- Step 8: Link to go back to dashboard -->
     <a href="dashboard.php" class="hacker-button">Go Back to Dashboard</a>
+
+    <!-- Step 9: JavaScript to toggle password visibility -->
+    <script src="../assets/js/profile.js"></script>
 </div>
 
-<!-- Step 9: JavaScript to toggle password visibility -->
-<script src="../assets/js/login.js"></script>
-
-
 </body>
+
 </html>

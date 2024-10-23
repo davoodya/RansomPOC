@@ -197,3 +197,32 @@ html, body {
     border: 1px solid #990000; /* Dark red border */
     color: #101010; /* Dark text */
 }
+
+/* Step 16: hacker Button Styling */
+.hacker-button {
+    display: flex; /* Display as a flex */
+    padding: 15px 30px; /* Larger padding for a button-like appearance */
+    background-color: #33ff33; /* Neon green background */
+    justify-self: center; /* Center the button */
+    color: #0f0f0f; /* Black text color */
+    font-size: 1.5em; /* Bigger font size */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Centered text */
+    border: 2px solid #0f0f0f; /* Black border */
+    border-radius: 5px; /* Slightly rounded corners */
+    text-decoration: none; /* Remove underline */
+    box-shadow: 0 0 10px rgba(51, 255, 51, 0.8); /* Glowing effect */
+    transition: all 0.3s ease; /* Smooth transitions */
+    margin-top: 20px; /* Top margin */
+
+    /* Center the button horizontally and vertically */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.hacker-button:hover {
+    background-color: #28a745; /* Darker green on hover */
+    color: #ffffff; /* White text on hover */
+    box-shadow: 0 0 20px rgba(51, 255, 51, 1); /* Stronger glow on hover */
+}

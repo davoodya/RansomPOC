@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Update Profile">
     </form>
     <!-- Step 8: Link to go back to dashboard -->
-    <a href="dashboard.php" class="btn btn-info" style="margin-top: 20px; display: block; text-align: center;">Go Back to Dashboard</a>
+    <a href="dashboard.php" class="hacker-button">Go Back to Dashboard</a>
 </div>
 
 <!-- Step 9: JavaScript to toggle password visibility -->

@@ -87,6 +87,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Step 4.5: Handle no changes detected
+    if (empty($updateMessages)) {
+        $updateMessages[] = 'No changes detected.';
+    }
+
+
 
 }
 

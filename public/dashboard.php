@@ -125,7 +125,7 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Step 10: Sidebar -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <img src="<?= htmlspecialchars($currentUserInfo['profile_pic'] ?: '../assets/img/default-avatar.png') ?>" alt="User Avatar" class="img-fluid rounded-circle mb-2">
+            <img src="<?= htmlspecialchars($currentUserInfo['profile_pic'] ?: '../assets/img/default-avatar.jpg') ?>" alt="User Avatar" class="img-fluid rounded-circle mb-2">
             <h4 class="text-center text-white"><?= htmlspecialchars($currentUserInfo["username"]); ?></h4>
         </div>
         <ul class="list-unstyled components">

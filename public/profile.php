@@ -102,5 +102,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // PHP Codes finished here
 ?>
 
+
 <!-- HTML Codes start here -->
 
+<!-- Step 5: Write Head Section -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Step 5: Head section -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Management</title>
+    <link rel="stylesheet" href="../assets/css/profile.css">
+</head>
+
+<body>
+<div class="profile-management">
+</div>
+
+</body>
+</html>

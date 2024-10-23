@@ -113,11 +113,11 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <style>
+    <!--<style>
         .fa-red, .fas {
             color: red !important;
         }
-    </style>
+    </style>-->
 </head>
 
 <body>

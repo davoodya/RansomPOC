@@ -1,8 +1,26 @@
-/* Step 1: Global Styles */
-body {
-    font-family: 'Nunito', sans-serif;
-    background-color: #101010;
+/* Ensure the container covers the entire screen */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Consolas', monospace; /* Classic terminal font */
+    background-color: #0c0c0c; /* Darker background for a stronger contrast */
     color: #0f0; /* Classic green for text */
+    background-image: radial-gradient(circle, rgba(51, 255, 51, 0.1) 10%, transparent 10%),
+    radial-gradient(circle, rgba(51, 255, 255, 0.1) 20%, transparent 20%);
+    background-size: 20px 20px;
+    animation: background-animation 5s linear infinite; /* Background animation */
+}
+
+
+@keyframes background-animation {
+    0% {
+        background-position: 0 0, 0 0;
+    }
+    100% {
+        background-position: 100px 100px, -100px -100px;
+    }
 }
 
 /* Step 2: Profile Management Box */
@@ -13,25 +31,36 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     max-width: 600px;
     margin: 0 auto;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 /* Step 3: Hover Effect on Profile Management Box */
 .profile-management:hover {
     transform: translateY(-10px);
+    box-shadow: 0 12px 40px rgba(0, 255, 255, 0.8); /* Glowing effect on hover */
 }
-
 
 /* Step 4.1: Headings */
 .profile-management h3 {
     text-align: center;
     margin-bottom: 20px;
-    color: #ff8c00; /* Orange heading*/
+    color: #ff8c00; /* Orange for heading */
     text-transform: uppercase;
     letter-spacing: 2px;
-    border-bottom: 3px solid #0f0;
+    border-bottom: 3px solid #0f0; /* Green border */
     padding-bottom: 10px;
+    animation: text-flicker 2s infinite alternate; /* Flicker animation */
+}
+
+@keyframes text-flicker {
+    0% {
+        opacity: 1;
+        text-shadow: 0 0 10px #00bfff;
+    }
+    100% {
+        opacity: 0.7;
+        text-shadow: 0 0 20px #00ff00;
+    }
 }
 
 /* Step 4.2: Labels */
@@ -39,11 +68,10 @@ body {
     display: block;
     margin-bottom: 10px;
     font-weight: 600;
-    color: #ff8c00; /* Orange labels*/
+    color: #ff8c00; /* Orange labels */
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
 
 /* Step 5: Input Container */
 .profile-management .input-container {
@@ -56,8 +84,8 @@ body {
     margin: 10px auto;
     max-width: 120px;
     border-radius: 50%;
-    border: 2px solid #0f0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    border: 2px solid #0f0; /* Green border */
+    box-shadow: 0 2px 6px rgba(0, 255, 255, 0.5); /* Glowing effect */
 }
 
 /* Step 7: Form Input Styles */
@@ -73,33 +101,33 @@ body {
     font-size: 16px;
     background-color: #101010; /* Same as body background */
     color: #0f0; /* Classic green text */
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; /* Added transform */
 }
 
 /* Step 8: Form Input Focus Styles */
 .profile-management input[type="text"]:focus,
 .profile-management input[type="password"]:focus,
 .profile-management input[type="file"]:focus {
-    border-color: #ff8c00; /* Orange border for focus*/
-    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.5);
+    border-color: #ff8c00; /* Orange border for focus */
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.7); /* Orange glow effect */
     outline: none;
+    transform: scale(1.02); /* Slight scaling on focus */
 }
-
 
 /* Step 9: Show Password Checkbox */
 .profile-management #show-password {
     margin-left: 10px;
     vertical-align: middle;
-    color: #ff8c00;
+    color: #ff8c00; /* Orange */
     cursor: pointer;
 }
 
 /* Step 10: Submit Button Styles */
 .profile-management input[type="submit"] {
-    background-color: #ff8c00; /* Orange background */
+    background-color: #0f0; /* Classic green background */
     color: #101010; /* Dark text color */
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
     padding: 15px 30px;
     text-transform: uppercase;
@@ -109,12 +137,32 @@ body {
 /* Step 11: Hover and Focus Effect on Submit Button */
 .profile-management input[type="submit"]:hover,
 .profile-management input[type="submit"]:focus {
-    background-color: #0f0; /* Classic green background on hover */
+    background-color: #ff8c00; /* Orange background on hover */
     color: #101010; /* Dark text color */
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.05); /* Slight upward movement and scaling */
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5); /* Orange glow on hover */
 }
 
-/* Step 12: Messages */
+/* Step 12: Go Back Button */
+.go-back {
+    background-color: #1a1a1a; /* Dark background */
+    color: #0f0; /* Classic green text */
+    padding: 10px 20px;
+    border: 2px solid #0f0;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.go-back:hover {
+    background-color: #00bfff; /* Light blue on hover */
+    transform: translateY(-3px); /* Slight upward movement */
+}
+
+/* Step 13: Messages */
 .message {
     padding: 15px;
     border-radius: 5px;
@@ -122,17 +170,28 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     text-align: center;
     font-weight: bold;
+    animation: slide-in 0.5s ease; /* Slide-in animation */
 }
 
+@keyframes slide-in {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
-/* Step 13: Success Message */
+/* Step 14: Success Message */
 .message.success {
     background-color: #0f0; /* Classic green for success message */
     border: 1px solid #005500; /* Dark green border */
     color: #101010; /* Dark text */
 }
 
-/* Step 14: Error Message */
+/* Step 15: Error Message */
 .message.error {
     background-color: #ff0000; /* Red for error messages */
     border: 1px solid #990000; /* Dark red border */

@@ -23,5 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':machine_id', $machine_id);
     $stmt->bindParam(':encryption_key', $encryption_key);
 
+    // Step 3.5: Execute the statement and respond with the appropriate message
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true, 'message' => 'Data received successfully']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'An error occurred']);
+    }
+} else {
+
 
 }

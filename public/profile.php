@@ -32,5 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmNewPassword = trim($_POST["confirm_new_password"] ?? '');
     $profilePicPath = $currentUser['profile_pic'];
 
+    // Step 4.1: Update profile picture if provided
+    if (isset($_FILES["profile_pic"]) && $_FILES["profile_pic"]["error"] == UPLOAD_ERR_OK) {
+        $targetDir = "../uploads/";
+        $fileExtension = pathinfo($_FILES["profile_pic"]["name"], PATHINFO_EXTENSION);
+        $targetFile = $targetDir . uniqid() . '.' . $fileExtension;
+        if (move_uploaded_file($_FILES["profile_pic"]["tmp_name"], $targetFile)) {
+            $profilePicPath = $targetFile;
+            $updateMessages[] = 'Profile picture updated successfully.';
+        } else {
+            $updateMessages[] = 'Error uploading profile picture.';
+        }
+    }
+
+
 }
 

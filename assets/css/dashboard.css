@@ -46,27 +46,53 @@ body {
     transition: all 0.4s ease;
 }
 
+/* Sidebar Header Styling with Gradient Background */
 .sidebar-header {
     padding: 20px;
-    background-color: #121212;
+    background: linear-gradient(270deg, #121212, #13aeac); /* Initial gradient background */
+    background-size: 400% 400%; /* To enable gradient movement */
+    animation: combinedAnimation 10s ease infinite; /* Using the combined animation */
     text-align: center;
-    border-bottom: 2px solid #33ff33;
+    border-bottom: 2px solid #33ff33; /* Default neon green border */
     font-size: 1.3em; /* Increased font size */
     font-weight: bold; /* Bold sidebar header */
     color: #33ff33;
+    text-shadow: 0 0 10px #33ff33; /* Initial text glow */
 }
 
+/* Profile picture */
 .sidebar-header img {
     max-width: 100px;
     margin: 0 auto;
     transition: transform 0.3s ease;
 }
 
+/* Hover effect: Only change border color and text boldness */
 .sidebar-header:hover {
-    background-color: #33ff33; /* Neon green background on hover */
-    color: #000000; /* Black text on hover */
-    transition: background-color 0.3s ease, color 0.3s ease, font-weight 0.3s ease;
+    border-bottom: 2px solid #ff8c00; /* Change border color on hover */
+    font-weight: bolder; /* Text becomes bolder */
+    text-shadow: 0 0 20px #00ff00; /* Intensify text glow on hover */
 }
+
+/* Combined background and text animation */
+@keyframes combinedAnimation {
+    0% {
+        background-position: 0 0, 0 0; /* Start background movement */
+        text-shadow: 0 0 10px #33ff33; /* Text flicker at start */
+        opacity: 1; /* Fully visible text */
+    }
+    50% {
+        background-position: 100% 50%, -100px -100px; /* Midway background movement */
+        text-shadow: 0 0 15px #00ff00; /* Text flicker intensifies */
+        opacity: 0.8; /* Slight text transparency */
+    }
+    100% {
+        background-position: 0% 50%, 100px 100px; /* Reverse background movement */
+        text-shadow: 0 0 20px #33ff33; /* Stronger text flicker */
+        opacity: 0.7; /* Text fades a bit */
+    }
+}
+
 
 /* Sidebar Collapse Icon */
 #sidebarCollapse {

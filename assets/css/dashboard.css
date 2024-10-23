@@ -65,3 +65,27 @@ body {
     color: #ffffff;
 }
 
+/* Step 5: Responsive Adjustments */
+@media (max-width: 767px) {
+    #sidebar {
+        width: 100%;
+        position: fixed;
+        left: -100%;
+        bottom: 0;
+    }
+
+    #sidebar.active {
+        left: 0;
+    }
+
+    #content.active {
+        margin-left: 0;
+    }
+
+    #sidebarCollapse {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 9999;
+    }
+}

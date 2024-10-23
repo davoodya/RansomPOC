@@ -75,6 +75,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Step 4.4: Update profile picture in the database
+    if ($profilePicPath !== $currentUser['profile_pic']) {
+        /** @noinspection ALL */
+        $sql = "UPDATE users SET profile_pic = :profile_pic WHERE user_id = :user_id";
+        if ($stmt = $pdo->prepare($sql)) {
+            $stmt->bindParam(":profile_pic", $profilePicPath, PDO::PARAM_STR);
+            $stmt->bindParam(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->execute();
+            $updateMessages[] = 'Profile picture path updated in the database.';
+        }
+    }
+
 
 }
 

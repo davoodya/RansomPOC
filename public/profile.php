@@ -32,4 +32,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmNewPassword = trim($_POST["confirm_new_password"] ?? '');
     $profilePicPath = $currentUser['profile_pic'];
 
+}
 

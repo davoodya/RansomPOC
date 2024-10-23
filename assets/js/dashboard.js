@@ -1,3 +1,4 @@
+
 // Step 1: Logging the machine ID to the console to verify which machine is targeted.
 function sendkillSignal(machineId) {
     console.log("Sending kill signal to machine ID:", machineId);
@@ -21,3 +22,12 @@ function sendkillSignal(machineId) {
             });
     }
 }
+
+// Step 2: Attach a click event handler to the element with the ID 'sidebarCollapse'.
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+});
+
+

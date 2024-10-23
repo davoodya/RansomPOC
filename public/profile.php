@@ -92,7 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updateMessages[] = 'No changes detected.';
     }
 
-
+    // Step 4.6: Store update messages in session and redirect
+    $_SESSION["profile_update_messages"] = implode('<br>', $updateMessages);
+    header("Location: profile.php");
+    exit;
 
 }
 

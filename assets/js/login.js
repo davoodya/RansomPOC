@@ -1,6 +1,6 @@
 // Step 1: JavaScript to handle fading out the error message -- >
 document.addEventListener("DOMContentLoaded", function() {
-    var errorElement = document.querySelector('.error');
+    const errorElement = document.querySelector('.error');
     if (errorElement) {
         setTimeout(function() {
             errorElement.style.opacity = "0";

@@ -7,7 +7,7 @@ function sendkillSignal(machineId) {
 
         $.post(' .. /includes/api/receive_kill_signal.php', { machine_id: machineId })
             .done(function(response) {
-                var data = JSON.parse(response);
+                const data = JSON.parse(response);
 
                 if (data.success) {
                     alert('Self-destruct signal sent successfully to machine ID: ' + machineId);

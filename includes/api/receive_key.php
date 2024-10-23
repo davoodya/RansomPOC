@@ -30,6 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo json_encode(['success' => false, 'message' => 'An error occurred']);
     }
 } else {
-
-
+    // Step 3.6: Respond with an error message if the request method is not POST
+    echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }

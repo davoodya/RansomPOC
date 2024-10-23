@@ -23,4 +23,10 @@ if (isset($_GET['machine_id'])) {
         // Step 4.2: Include error information if execute fails
         echo json_encode(['error' => $stmt->errorInfo()]);
     }
+} else {
+    // Step 4.3: Handle case where machine_id is not provided
+    echo json_encode(['error' => 'Machine ID not provided.']);
 }
+
+// PHP Codes finished here
+?>

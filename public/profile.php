@@ -128,6 +128,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php unset($_SESSION["profile_update_messages"]); ?>
     <?php endif; ?>
 
+    <!-- Step 7: Profile update form -->
+    <form action="profile.php" method="post" enctype="multipart/form-data">
+        <div class="input-container">
+            <label>Username:</label>
+            <input type="text" name="username" value="<?= htmlspecialchars($currentUser['username']) ?>" required>
+        </div>
+        <div class="input-container">
+            <label>Profile Picture:</label>
+            <?php if ($currentUser['profile_pic']): ?>
+                <img src="<?= htmlspecialchars($currentUser['profile_pic']) ?>" alt="Profile Picture" width="100">
+                <br>
+            <?php endif; ?>
+            <input type="file" name="profile_pic">
+        </div>
+        <div class="input-container">
+            <label>Password:</label>
+            <input type="password" id="password" name="new_password">
+            <input type="checkbox" id="show-password"> Show Password
+        </div>
+        <div class="input-container">
+            <label>Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm_new_password">
+        </div>
+        <input type="submit" value="Update Profile">
+    </form>
+
 
 </body>
 </html>

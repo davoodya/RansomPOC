@@ -1,0 +1,11 @@
+/* Step 1: Base styling to optimize readability and contrast */
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #101010; /* Optimize readability and contrast */
+    color: #8c8c8c;
+}
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}

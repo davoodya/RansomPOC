@@ -119,7 +119,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
 <div class="profile-management">
-</div>
+    <!-- Step 6: Display profile update messages -->
+    <h3>Update Profile</h3>
+    <?php if (!empty($_SESSION["profile_update_messages"])): ?>
+        <div class="alert alert-info">
+            <?= $_SESSION["profile_update_messages"]; ?>
+        </div>
+        <?php unset($_SESSION["profile_update_messages"]); ?>
+    <?php endif; ?>
+
 
 </body>
 </html>

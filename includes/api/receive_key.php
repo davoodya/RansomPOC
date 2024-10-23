@@ -33,3 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Step 3.6: Respond with an error message if the request method is not POST
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
+
+
+// API finish here
+?>

@@ -154,6 +154,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <input type="submit" value="Update Profile">
     </form>
+    <!-- Step 8: Link to go back to dashboard -->
+    <a href="dashboard.php" class="btn btn-info" style="margin-top: 20px; display: block; text-align: center;">Go Back to Dashboard</a>
+</div>
 
 
 </body>

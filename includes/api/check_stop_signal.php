@@ -20,6 +20,7 @@ if (isset($_GET['machine_id'])) {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         echo json_encode(['stop_signal' => $result['stop_signal'] ?? 0]);
     } else {
-        passthru('echo "Error fetching stop signal."');
+        // Step 4.2: Include error information if execute fails
+        echo json_encode(['error' => $stmt->errorInfo()]);
     }
 }

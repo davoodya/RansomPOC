@@ -10,6 +10,7 @@ body {
     align-items: stretch;
 }
 
+/* Step 2: Sidebar Styling */
 #sidebar {
     min-width: 250px;
     background-color: #262626;
@@ -32,6 +33,7 @@ body {
     text-align: center;
 }
 
+/* Step 3: Sidebar List ul li & a Styling */
 #sidebar ul.components {
     padding: 20px 0;
 }
@@ -46,3 +48,20 @@ body {
 #sidebar ul li a:hover {
     color: #ffffff; /* Clear visibility on hover */
 }
+
+#sidebarCollapse {
+    background-color: #0f0;
+    color: #111;
+}
+
+/* Step 4: Content Styling */
+#content {
+    width: 100%;
+    padding: 20px;
+    transition: all 0.3s;
+}
+
+#content h1 {
+    color: #ffffff;
+}
+

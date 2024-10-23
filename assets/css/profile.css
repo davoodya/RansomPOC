@@ -5,7 +5,16 @@ body {
     color: #0f0; /* Classic green for text */
 }
 
-
+/* Step 2: Profile Management Box */
+.profile-management {
+    background: #1a1a1a; /* Dark background for main content box */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    max-width: 600px;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+}
 
 
 /* Step 9: Show Password Checkbox */

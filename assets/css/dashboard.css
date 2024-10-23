@@ -87,7 +87,7 @@ body {
         opacity: 0.8; /* Slight text transparency */
     }
     100% {
-        background-position: 0% 50%, 100px 100px; /* Reverse background movement */
+        background-position: 0, 50%, 100px 100px; /* Reverse background movement */
         text-shadow: 0 0 20px #33ff33; /* Stronger text flicker */
         opacity: 0.7; /* Text fades a bit */
     }

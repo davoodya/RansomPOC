@@ -112,7 +112,7 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/dashboard2.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <style>
         .fa-red, .fas {
             color: red !important;
@@ -148,47 +148,55 @@ $keys = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <h1 class="text-white">Welcome back, <?= htmlspecialchars($_SESSION["username"]); ?>!</h1>
 
 
-            <!-- Step 13: Status Overview section -->
+            <!-- Step 13: Status Overview section with enhanced fonts and transitions -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
+                    <!-- Active Warriors -->
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light-black rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-line fa-3x fa-red"></i>
+                        <div class="status-box bg-dark rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-danger"></i>
                             <div class="ms-3">
-                                <p class="mb-2 text-white">Active Warriors</p>
-                                <h6 class="mb-0 text-white"><?= $activeWarriors ?></h6>
+                                <p class="status-title mb-2">Active Warriors</p>
+                                <h6 class="status-value mb-0"><?= $activeWarriors ?></h6>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Totally Encrypted -->
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light-black rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x fa-red"></i>
+                        <div class="status-box bg-dark rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-bar fa-3x text-danger"></i>
                             <div class="ms-3">
-                                <p class="mb-2 text-white">Totally Encrypted</p>
-                                <h6 class="mb-0 text-white"><?= $totalEncrypted ?></h6>
+                                <p class="status-title mb-2">Totally Encrypted</p>
+                                <h6 class="status-value mb-0"><?= $totalEncrypted ?></h6>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Machine Paid -->
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light-black rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-area fa-3x fa-red"></i>
+                        <div class="status-box bg-dark rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-area fa-3x text-danger"></i>
                             <div class="ms-3">
-                                <p class="mb-2 text-white">Machine Paid</p>
-                                <h6 class="mb-0 text-white"><?= $machinePaid ?></h6>
+                                <p class="status-title mb-2">Machine Paid</p>
+                                <h6 class="status-value mb-0"><?= $machinePaid ?></h6>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Machine Terminated -->
                     <div class="col-sm-6 col-xl-3">
-                        <div class="bg-light-black rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-pie fa-3x fa-red"></i>
+                        <div class="status-box bg-dark rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-pie fa-3x text-danger"></i>
                             <div class="ms-3">
-                                <p class="mb-2 text-white">Machine Terminated</p>
-                                <h6 class="mb-0 text-white"><?= $machineTerminated ?></h6>
+                                <p class="status-title mb-2">Machine Terminated</p>
+                                <h6 class="status-value mb-0"><?= $machineTerminated ?></h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Sale & Revenue End -->
 
             <!-- Step 14: Machine Keys Table -->

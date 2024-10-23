@@ -11,4 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $json = file_get_contents('php://input');
     $data = json_decode($json, true);
 
+    // Step 3.2: Extract machine_id and encryption_key from the POST data
+    $machine_id = $data['machine_id'] ?? '';
+    $encryption_key = $data['encryption_key'] ?? '';
+
 }

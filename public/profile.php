@@ -45,6 +45,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Step 4.2: Validate and update new password
+    if (!empty($newPassword)) {
+        if ($newPassword === $confirmNewPassword) {
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            /** @noinspection ALL */
+            $sql = "UPDATE users SET password = :password WHERE user_id = :user_id";
+            if ($stmt = $pdo->prepare($sql)) {
+                $stmt->bindParam(":password", $hashedPassword, PDO::PARAM_STR);
+                $stmt->bindParam(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+                $stmt->execute();
+                $updateMessages[] = 'Password updated successfully.';
+            }
+        } else {
+            $updateMessages[] = 'New password and confirmation do not match.';
+        }
+    }
+
+
+
 
 }
 

@@ -1,5 +1,6 @@
 <?php
 // Step 1: Include a database connection file
+global $pdo;
 require_once "../db.php";
 
 // Step 2: Set the header for JSON content type
@@ -14,5 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Step 3.2: Extract machine_id and encryption_key from the POST data
     $machine_id = $data['machine_id'] ?? '';
     $encryption_key = $data['encryption_key'] ?? '';
+
+    // Step 3.3: Prepare the SQL statement to insert the data into the database
+    $stmt = $pdo->prepare("INSERT INTO machine_keys (machine_id, encryption_key) VALUES (:machine_id, :encryption_key)");
 
 }

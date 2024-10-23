@@ -1,0 +1,8 @@
+
+/* Step 9: Show Password Checkbox */
+.profile-management #show-password {
+    margin-left: 10px;
+    vertical-align: middle;
+    color: #ff8c00;
+    cursor: pointer;
+}

@@ -19,4 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Step 3.3: Prepare the SQL statement to insert the data into the database
     $stmt = $pdo->prepare("INSERT INTO machine_keys (machine_id, encryption_key) VALUES (:machine_id, :encryption_key)");
 
+    // Step 3.4: Bind the parameters
+    $stmt->bindParam(':machine_id', $machine_id);
+    $stmt->bindParam(':encryption_key', $encryption_key);
+
+
 }

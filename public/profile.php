@@ -63,6 +63,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
+    // Step 4.3: Validate and update username
+    if ($newUsername !== $currentUser['username']) {
+        /** @noinspection ALL */
+        $sql = "UPDATE users SET username = :username WHERE user_id = :user_id";
+        if ($stmt = $pdo->prepare($sql)) {
+            $stmt->bindParam(":username", $newUsername, PDO::PARAM_STR);
+            $stmt->bindParam(":user_id", $_SESSION["user_id"], PDO::PARAM_INT);
+            $stmt->execute();
+            $updateMessages[] = 'Username updated successfully.';
+        }
+    }
 
 
 }

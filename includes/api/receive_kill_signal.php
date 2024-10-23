@@ -19,5 +19,22 @@ if (isset($_POST['machine_id'])) {
 
         // Step 3.3: Bind the machine_id parameter
         $stmt->bindParam(':machine_id', $machine_id);
+        // Step 3.4: Execute the statement
+        if ($stmt->execute()) {
+            // Step 3.5: Check if any rows were updated
+            if ($stmt->rowCount() > 0) {
+                $response['success'] = true;
+            } else {
+                $response['error'] = 'No rows updated. Check if machine_id exists.';
+            }
+        } else {
+            $response['error'] = 'Database update failed.';
+        }
+    } catch (PDOException $e) {
+        // Step 3.6: Handle any PDO exceptions
+        $response['error'] = 'PDOException: ' . $e->getMessage();
+    }
+} else {
+    passthru('echo "Machine ID not provided."');
+}
 
-    }}
